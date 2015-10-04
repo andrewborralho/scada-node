@@ -49,7 +49,7 @@ var onServerStart = function() {
 	});
 	
 	var net = require("net");
-	var client = net.connect(46786, '182.100.67.113', function(){
+	var client = net.connect(502, '182.100.67.113', function(){
 		console.log("conexao estabelecida");
 	});
 }
