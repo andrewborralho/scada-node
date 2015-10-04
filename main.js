@@ -50,5 +50,5 @@ var onServerStart = function() {
 }
 
 var server = http.createServer(onRequest);
-server.listen(502, onServerStart);
+server.listen(3000, onServerStart);
 
