@@ -47,13 +47,15 @@ var onServerStart = function() {
 	require('dns').lookup(require('os').hostname(), function (err, add, fam) {
   	console.log('---- servidor rodando em: '+add);
 	});
+	179.122.45.242:1047
+	
+	var net = require("net");
+	var client = net.connect(1047, "179.122.45.242", function(){
+		console.log("conexao estabelecida");
+	});
 }
 
-var io = require('socket.io').listen(502);
-io.sockets.on('connection', function (socket) {
-  var endpoint = socket.manager.handshaken[socket.id].address;
-  console.log('    Client connected from: ' + endpoint.address + ":" + endpoint.port);
-});
+
 
 var server = http.createServer(onRequest);
 server.listen(3000, onServerStart);
