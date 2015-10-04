@@ -46,34 +46,25 @@ var onServerStart = function() {
 	require('dns').lookup(require('os').hostname(), function (err, add, fam) {
   	console.log('---- servidor rodando em: '+add);
 	});
-	/*
-	var net = require("net");
-	var client = net.connect(502, '182.100.67.113', function(){
-		console.log("conexao estabelecida");
-	});
-	*/
 }
 
-var http = require("http");
-var server = http.createServer(onRequest);
+
+/*
+var appication = require("http");
+var server = appication.createServer(onRequest);
 server.listen(3000, onServerStart);
+*/
 
-
-var app = require('express')();
-var http2 = require('http').Server(app);
-var io = require('socket.io')(http2);
-
-app.get('/', function(req, res){
-  res.sendfile('index.html');
-});
-
+var express = require('express');
+var app     = express();
+var server  = require('http').createServer(app);
+var io      = require('socket.io');
 io.on('connection', function(socket){
   console.log('    connection :', socket.request.connection._peername);
 });
 
-http2.listen(502, function(){
-  console.log('listening on *:502');
-});
+io.listen(server)
+server.listen(8000, onServerStart);
 
 
 
