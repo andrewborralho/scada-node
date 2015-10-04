@@ -30,6 +30,8 @@ var fillDataOnHtml = function(formattedData){
 };
 
 var onRequest = function(request, response) {
+	var util = require('util');
+	console.log(util.inspect(request, {showHidden: false, depth: null}));
 	console.log("	requested from " + request.connection.remoteAddress);
     response.writeHead(200, {"Content-Type": "text/html"}); // HTML??
     if (request.url == "/") {
@@ -50,5 +52,5 @@ var onServerStart = function() {
 }
 
 var server = http.createServer(onRequest);
-server.listen(3000, onServerStart);
+server.listen(512, onServerStart);
 
