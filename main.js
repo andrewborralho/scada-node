@@ -1,5 +1,4 @@
 
-var http = require("http");
 
 
 var onFirstConectionWithAirGate = function(){
@@ -54,48 +53,16 @@ var onServerStart = function() {
 	});
 	*/
 }
-/*
 
-var net = require('net');
-
-var socketServer = net.createServer(function(socket) {
-	// socket.write('Echo server\r\n');
-	// socket.pipe(socket);
-});
-
-server.listen(1337, '127.0.0.1');
-
-var socket = io.listen(socketServer);
-socket.on('connection', function (client) {
-  var client_ip_address = socket.request.connection.remoteAddress;
-}
-
+var http = require("http");
 var server = http.createServer(onRequest);
 server.listen(3000, onServerStart);
 
-*/
 
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-
-app.get('/', function(req, res){
-  res.sendfile('index.html');
-});
-
-io.on('connection', function(socket){
-  console.log('a user connected');
-  var client_ip_address = socket.request.connection.remoteAddress;
-  console.log(client_ip_address);
-});
-
-io.listen(502, function(){
-	console.log("io escutando 502");
-})
-
-
-http.listen(3000, function(){
-  console.log('listening on *:3000');
-});
+var io = require('socket.io');
+io.on('connection', function (socket) {
+  console.log('    connection :', socket.request.connection._peername);
+  // connection : { address: '192.168.1.86', family: 'IPv4', port: 52837 }
+}
 
 
