@@ -63,6 +63,6 @@ var io = require('socket.io');
 io.on('connection', function (socket) {
   console.log('    connection :', socket.request.connection._peername);
   // connection : { address: '192.168.1.86', family: 'IPv4', port: 52837 }
-}
+});
 
 
