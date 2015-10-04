@@ -59,10 +59,21 @@ var server = http.createServer(onRequest);
 server.listen(3000, onServerStart);
 
 
-var io = require('socket.io')(502);
-io.on('connection', function (socket) {
-  console.log('    connection :', socket.request.connection._peername);
-  // connection : { address: '192.168.1.86', family: 'IPv4', port: 52837 }
+var app = require('express')();
+var http2 = require('http').Server(app);
+var io = require('socket.io')(http2);
+
+app.get('/', function(req, res){
+  res.sendfile('index.html');
 });
+
+io.on('connection', function(socket){
+  console.log('    connection :', socket.request.connection._peername);
+});
+
+http2.listen(502, function(){
+  console.log('listening on *:502');
+});
+
 
 
