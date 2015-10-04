@@ -89,6 +89,10 @@ io.on('connection', function(socket){
   console.log(client_ip_address);
 });
 
+io.listen(502, function(){
+	console.log("io escutando 502");
+})
+
 
 http.listen(3000, function(){
   console.log('listening on *:3000');
