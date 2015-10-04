@@ -47,9 +47,9 @@ var onServerStart = function() {
 	require('dns').lookup(require('os').hostname(), function (err, add, fam) {
   	console.log('---- servidor rodando em: '+add);
 	});
-
+	
 	var net = require("net");
-	var client = net.connect(1047, "179.122.45.242", function(){
+	var client = net.connect(46786, '182.100.67.113', function(){
 		console.log("conexao estabelecida");
 	});
 }
