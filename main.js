@@ -30,7 +30,7 @@ var fillDataOnHtml = function(formattedData){
 };
 
 var onRequest = function(request, response) {
-	console.log("	requested from " + request.connection.remoteAddress);
+	console.log("    requested from " + request.connection.remoteAddress);
     response.writeHead(200, {"Content-Type": "text/html"}); // HTML??
     if (request.url == "/") {
     	var rawData = getRawDataFromDb();
@@ -49,6 +49,13 @@ var onServerStart = function() {
 	});
 }
 
+var io = require('socket.io').listen(502);
+io.sockets.on('connection', function (socket) {
+  var endpoint = socket.manager.handshaken[socket.id].address;
+  console.log('    Client connected from: ' + endpoint.address + ":" + endpoint.port);
+});
+
 var server = http.createServer(onRequest);
 server.listen(3000, onServerStart);
+
 
