@@ -122,6 +122,23 @@ var server = net.createServer (function (socket){
 });
 
 server.listen(502);
+
+
+var modbus = require("modbus-tcp");
+var client = new modbus.Client();
+
+// link client and server streams together 
+client.pipe(server.pipe());
+server.pipe(client.pipe());
+ 
+// read coils from unit id = 0, from address 10 to 13 
+var from = 4;
+var to = 4;
+client.readHoldingRegisters(1, from, to, function (err, coils) {
+	for (var i = from; i <= to; i++) {
+			console.log("register " + items[i - from][0] + " - " + items[i - from][1]);
+		}
+});
     
     
 
