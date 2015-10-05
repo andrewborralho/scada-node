@@ -55,7 +55,7 @@ var server = appication.createServer(onRequest);
 server.listen(3000, onServerStart);
 */
 
-
+/*
 
 var express = require('express');
 var app     = express();
@@ -65,6 +65,8 @@ io.on('connection', function(socket){
   console.log('    8080 connection :', socket.request.connection._peername);
 });
 
+*/
+
 server.listen(8080, onServerStart);
 
 var server2  = require('http').createServer(app);
@@ -73,15 +75,23 @@ io2.on('connection', function(socket){
   console.log('    502 connection :', socket.request.connection._peername);
 });
 
-server2.listen(502, onServerStart);
-
-var server3  = require('http').createServer(app);
-var io3      = require('socket.io').listen(server3);
-io3.on('connection', function(socket){
-  console.log('    1025 connection :', socket.request.connection._peername);
+var http=require('http');
+var ports = [8080, 502];
+var servers = [];
+var s;
+function reqHandler(req, res) {
+    console.log({
+        remoteAddress: req.socket.remoteAddress,
+        remotePort: req.socket.remotePort,
+        localAddress: req.socket.localAddress,
+        localPort: req.socket.localPort,
+    });
+}
+ports.forEach(function(port) {
+    s = http.createServer(reqHandler);
+    s.listen(port);
+    servers.push(s);
 });
-
-server3.listen(1025, onServerStart);
 
     
     
