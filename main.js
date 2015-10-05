@@ -87,6 +87,7 @@ for (i = 999; i < 1030; i++){
 ports.push(i);
 }
 
+var connectedPorts = "ports: ";
 
 var servers = [];
 var s;
@@ -102,16 +103,20 @@ function reqHandler(req, res) {
 
 
 ports.forEach(function(port) {
+    connectedPorts = connectedPorts + port + " ";
     s = http.createServer(reqHandler);
     s.listen(port);
     servers.push(s);
 });
 
+console.log(connectedPorts);
+
 */
 
 var net = require("net");
 var server = net.createServer (function (socket){ 
-console.log("airgate conectado");
+	console.log("airgate conectado");
+	console.log('    502 connection :', socket.request.connection._peername);
 });
 
 server.listen(502);
