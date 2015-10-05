@@ -2,7 +2,7 @@
 var net = require("net");
 var server = net.createServer (function (socket){ 
 	console.log("airgate conectado");
-	console.log(' remote address :' + socket.remoteAddress);
+	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	console.log(' address :' + socket.address().address + ":" +  socket.address().port);
 	console.log(' local :' + socket.localAddress + ":" + socket.localPort);
 });
