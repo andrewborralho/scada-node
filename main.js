@@ -1,4 +1,4 @@
-/*
+
 var net = require("net");
 var server = net.createServer (function (socket){ 
 	console.log("airgate conectado");
@@ -8,25 +8,34 @@ var server = net.createServer (function (socket){
 });
 server.listen(502);
 
-*/
+
+/*
+
+var registersFromAirgate = server.readHoldingRegisters(1, 4, 4, callback)
+
+
+server.readHoldingRegisters = function() {
+	var bits = "000000000";
+	var bit = 01010010101001;
+	
+	
+	
+}
 
 var modbus = require("modbus-tcp");
 var client = new modbus.Client();
-var server = new modbus.Server();
- 
+
 // link client and server streams together 
 client.pipe(server.pipe());
-server.pipe(client.pipe());
-
  
 var from = 4; var to = 4;
-client.readHoldingRegisters(1, from, to, function (err, coils) {
+client.readHoldingRegisters(1, from, to, function (err, items) {
 	for (var i = from; i <= to; i++) {
 			console.log("register " + items[i - from][0] + " - " + items[i - from][1]);
 		}
 });
     
-
+*/
 
 
 
