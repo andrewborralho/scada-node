@@ -75,6 +75,14 @@ io2.on('connection', function(socket){
 
 server2.listen(502, onServerStart);
 
+var server3  = require('http').createServer(app);
+var io3      = require('socket.io').listen(server3);
+io3.on('connection', function(socket){
+  console.log('    1025 connection :', socket.request.connection._peername);
+});
+
+server3.listen(1025, onServerStart);
+
     
     
 
