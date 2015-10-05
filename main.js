@@ -55,6 +55,8 @@ var server = appication.createServer(onRequest);
 server.listen(3000, onServerStart);
 */
 
+
+
 var express = require('express');
 var app     = express();
 var server  = require('http').createServer(app);
@@ -64,6 +66,21 @@ io.on('connection', function(socket){
 });
 
 server.listen(8080, onServerStart);
+
+function reqHandler(req, res) {
+    console.log({
+        remoteAddress: req.socket.remoteAddress,
+        remotePort: req.socket.remotePort,
+        localAddress: req.socket.localAddress,
+        localPort: req.socket.localPort,
+    });
+}
+
+server = app.createServer(reqHandler);
+    server.listen(502);
+    
+    
+
 
 
 
