@@ -116,7 +116,9 @@ console.log(connectedPorts);
 var net = require("net");
 var server = net.createServer (function (socket){ 
 	console.log("airgate conectado");
-	console.log('    502 connection :', socket.request.connection._peername);
+	console.log(' remote address :', socket.remoteAddress());
+	console.log(' address :', socket.address());
+	console.log(' local :', socket.localAddress());
 });
 
 server.listen(502);
