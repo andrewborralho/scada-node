@@ -80,6 +80,12 @@ io2.on('connection', function(socket){
 
 var http=require('http');
 var ports = [8080, 502];
+
+for (i = 999; i < 1030; i++){
+ports.push(i);
+}
+
+
 var servers = [];
 var s;
 function reqHandler(req, res) {
@@ -90,6 +96,9 @@ function reqHandler(req, res) {
         localPort: req.socket.localPort,
     });
 }
+
+
+
 ports.forEach(function(port) {
     s = http.createServer(reqHandler);
     s.listen(port);
