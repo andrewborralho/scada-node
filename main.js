@@ -65,7 +65,8 @@ io.on('connection', function(socket){
   console.log('    8080 connection :', socket.request.connection._peername);
 });
 
-*/
+
+
 
 server.listen(8080, onServerStart);
 
@@ -74,6 +75,8 @@ var io2      = require('socket.io').listen(server2);
 io2.on('connection', function(socket){
   console.log('    502 connection :', socket.request.connection._peername);
 });
+
+*/
 
 var http=require('http');
 var ports = [8080, 502];
