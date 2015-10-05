@@ -1,4 +1,42 @@
+/*
+var net = require("net");
+var server = net.createServer (function (socket){ 
+	console.log("airgate conectado");
+	console.log(' remote address :' + socket.remoteAddress);
+	console.log(' address :' + socket.address().address + ":" +  socket.address().port);
+	console.log(' local :' + socket.localAddress + ":" + socket.localPort);
+});
+server.listen(502);
 
+*/
+
+var modbus = require("modbus-tcp");
+var client = new modbus.Client();
+var server = new modbus.Server();
+ 
+// link client and server streams together 
+client.pipe(server.pipe());
+server.pipe(client.pipe());
+
+ 
+var from = 4; var to = 4;
+client.readHoldingRegisters(1, from, to, function (err, coils) {
+	for (var i = from; i <= to; i++) {
+			console.log("register " + items[i - from][0] + " - " + items[i - from][1]);
+		}
+});
+    
+
+
+
+
+
+
+
+
+
+
+/*
 
 
 var onFirstConectionWithAirGate = function(){
@@ -48,6 +86,7 @@ var onServerStart = function() {
 	});
 }
 
+*/
 
 /*
 var appication = require("http");
@@ -113,33 +152,6 @@ console.log(connectedPorts);
 
 */
 
-var net = require("net");
-var server = net.createServer (function (socket){ 
-	console.log("airgate conectado");
-	console.log(' remote address :' + socket.remoteAddress);
-	console.log(' address :' + socket.address().address + ":" +  socket.address().port);
-	console.log(' local :' + socket.localAddress + ":" + socket.localPort);
-});
-
-server.listen(502);
-
-
-var modbus = require("modbus-tcp");
-var client = new modbus.Client();
-
-// link client and server streams together 
-client.pipe(server.pipe());
-server.pipe(client.pipe());
- 
-// read coils from unit id = 0, from address 10 to 13 
-var from = 4;
-var to = 4;
-client.readHoldingRegisters(1, from, to, function (err, coils) {
-	for (var i = from; i <= to; i++) {
-			console.log("register " + items[i - from][0] + " - " + items[i - from][1]);
-		}
-});
-    
     
 
 
