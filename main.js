@@ -5,8 +5,22 @@ var server = net.createServer (function (socket){
 	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	console.log(' address :' + socket.address().address + ":" +  socket.address().port);
 	console.log(' local :' + socket.localAddress + ":" + socket.localPort);
+	
+	socket.on('connect', function () {
+		socket.write('000100000006FF0300040001', 'hex', function(data){
+     			console.log("	recebido on connect: " + data); 
+   		})
+    	});
+    	
+    	socket.on('data', function (data) {
+        	console.log("	recebido on data: " + data);
+    	});
+	
 });
 server.listen(502);
+
+
+
 
 /*
 
