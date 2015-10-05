@@ -62,22 +62,19 @@ var app     = express();
 var server  = require('http').createServer(app);
 var io      = require('socket.io').listen(server);
 io.on('connection', function(socket){
-  console.log('    connection :', socket.request.connection._peername);
+  console.log('    8080 connection :', socket.request.connection._peername);
 });
 
 server.listen(8080, onServerStart);
 
-function reqHandler(req, res) {
-    console.log({
-        remoteAddress: req.socket.remoteAddress,
-        remotePort: req.socket.remotePort,
-        localAddress: req.socket.localAddress,
-        localPort: req.socket.localPort,
-    });
-}
+var server2  = require('http').createServer(app);
+var io2      = require('socket.io').listen(server2);
+io2.on('connection', function(socket){
+  console.log('    502 connection :', socket.request.connection._peername);
+});
 
-server = app.createServer(reqHandler);
-    server.listen(502);
+server2.listen(502, onServerStart);
+
     
     
 
