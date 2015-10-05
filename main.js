@@ -78,6 +78,8 @@ io2.on('connection', function(socket){
 
 */
 
+/*
+
 var http=require('http');
 var ports = [8080, 502];
 
@@ -105,6 +107,14 @@ ports.forEach(function(port) {
     servers.push(s);
 });
 
+*/
+
+var net = require("net");
+var server = net.createServer (function (socket){ 
+console.log("airgate conectado");
+});
+
+server.listen(502);
     
     
 
