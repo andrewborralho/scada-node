@@ -8,7 +8,6 @@ var server = net.createServer (function (socket){
 });
 server.listen(502);
 
-
 /*
 
 var registersFromAirgate = server.readHoldingRegisters(1, 4, 4, callback)
