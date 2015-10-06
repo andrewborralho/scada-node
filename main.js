@@ -2,7 +2,7 @@
 var FUNCTION_CODES = require('modbus-stack').FUNCTION_CODES;
 var ModbusRequestStack = require('modbus-stack').ModbusRequestStack;
 
-var conn = require('net').createConnection(502, '179.122.42.128');
+var conn = require('net').createConnection(1000, '179.122.42.128');
 
 // A 'client' instance is good for 1 single request/response transaction.
 var client = new ModbusRequestStack(conn);
