@@ -1,30 +1,20 @@
-var ipAddress = '179.122.42.128';
 
-
-var FC = require('modbus-stack').FUNCTION_CODES;
-
-var client = require('modbus-stack/client').createClient(502, ipAddress);
-
-client.request(FC.READ_HOLDING_REGISTERS, 0, 5, function(err, response) {
-  if (err) throw err;
-  console.log(response);
-  client.end();
-});
-
-/*
 var net = require("net");
 var server = net.createServer (function (socket){ 
 	console.log("airgate conectado");
 	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	console.log(' address :' + socket.address().address + ":" +  socket.address().port);
 	console.log(' local :' + socket.localAddress + ":" + socket.localPort);
-	socket.end();
 	setTimeout(function(){
-		console.log("socket fechado... esperando 10s");
-		readAirGate(socket.remoteAddress);
+		socket.write('000100000006FF0300040001', 'hex', function(data){
+			console.log("socket write (tentativa): " + data); 
+   			})
+    		});
 	}, 10000);
 });
 server.listen(502);
+
+/*
 
 var readAirGate = function(ipAddress) {
 	
@@ -37,8 +27,8 @@ var readAirGate = function(ipAddress) {
   		client.end();
 	});
 }
-
 */
+
 
 /*
 
