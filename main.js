@@ -1,4 +1,4 @@
-require('colors');
+//require('colors');
 var FUNCTION_CODES = require('modbus-stack').FUNCTION_CODES;
 var ModbusRequestStack = require('modbus-stack').ModbusRequestStack;
 
@@ -19,8 +19,8 @@ client.request(fc, startAddress, numToRead, function(err, response) {
   
   response.forEach(function(register, i) {
     console.log(
-      ("Sensor " + String(startAddress + i).bold + ":\t").blue +
-      (String(register/10).bold + '\u00B0F').green
+      ("Sensor " + String(startAddress + i) + ":\t") +
+      (String(register/10).bold + '\u00B0F')
      );
   });
 
