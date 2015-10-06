@@ -6,12 +6,16 @@ var server = net.createServer (function (socket){
 	console.log(' address :' + socket.address().address + ":" +  socket.address().port);
 	console.log(' local :' + socket.localAddress + ":" + socket.localPort);
 	socket.end();
-	readAirGate(socket.remoteAddress);
+	setTimeout(function(){
+		console.log("socket fechado... esperando 10s");
+		readAirGate(socket.remoteAddress);
+	}, 10000);
 });
 server.listen(502);
 
 var readAirGate = function(ipAddress) {
-
+	
+	
 	var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
 	var client = require('modbus-stack/client').createClient(502, ipAddress);
 	var req = client.request(RHR, 0, 50);  // Read 50 contiguous registers from 0
