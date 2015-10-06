@@ -1,3 +1,5 @@
+console.log("rodou");
+/*
 
 var net = require("net");
 var server = net.createServer (function (socket){ 
@@ -5,8 +7,37 @@ var server = net.createServer (function (socket){
 	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	console.log(' address :' + socket.address().address + ":" +  socket.address().port);
 	console.log(' local :' + socket.localAddress + ":" + socket.localPort);
+	readAirGate(socket.remoteAddress);
 	
-	socket.on('connect', function () {
+});
+server.listen(502);
+
+
+var readAirGate = function(ipAddress){
+	
+var modbus = require('./modbus');
+
+	// create a modbus client
+	var client = modbus.createTCPClient(502, ipAddress, function (err) {
+	    if (err) {
+	        console.log(err);
+	        exit(0);
+	    }
+	});
+	
+	// make some calls
+	client.readInputRegister(0, 10, function (resp, err) {
+		if(err) { console.log(err);}
+		console.log(resp)
+	  // resp will look like { fc: 4, byteCount: 20, register: [ values 0 - 10 ] }
+	});
+}
+
+*/
+
+/*
+
+socket.on('connect', function () {
 		socket.write('000100000006FF0300040001', 'hex', function(data){
      			console.log("	recebido on connect: " + data); 
    		})
@@ -15,10 +46,7 @@ var server = net.createServer (function (socket){
     	socket.on('data', function (data) {
         	console.log("	recebido on data: " + data);
     	});
-	
-});
-server.listen(502);
-
+*/
 
 
 
