@@ -1,31 +1,14 @@
-//require('colors');
-var FUNCTION_CODES = require('modbus-stack').FUNCTION_CODES;
-var ModbusRequestStack = require('modbus-stack').ModbusRequestStack;
+var ipAddress = '179.122.42.128';
 
-var conn = require('net').createConnection(1000, '179.122.42.128');
 
-// A 'client' instance is good for 1 single request/response transaction.
-var client = new ModbusRequestStack(conn);
+var FC = require('modbus-stack').FUNCTION_CODES;
 
-// We're gonna call for the "Read Input Registers" function on the remote
-// MODBUS device, requesting to read the current values of the first 4 registers.
-var fc = FUNCTION_CODES.READ_HOLDING_REGISTERS;
-var startAddress = 4;
-var numToRead = 1;
-client.request(fc, startAddress, numToRead, function(err, response) {
-  if (err) {
-    throw err;
-  }
-  
-  response.forEach(function(register, i) {
-    console.log(
-      ("Sensor " + String(startAddress + i) + ":\t") +
-      (String(register/10) + '\u00B0F')
-     );
-  });
+var client = require('modbus-stack/client').createClient(502, ipAddress);
 
-  // Close the connection
-  conn.end();
+client.request(FC.READ_INPUT_REGISTERS, 0, 5, function(err, response) {
+  if (err) throw err;
+  console.log(response);
+  client.end();
 });
 
 /*
