@@ -5,12 +5,21 @@ var server = net.createServer (function (socket){
 	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	console.log(' address :' + socket.address().address + ":" +  socket.address().port);
 	console.log(' local :' + socket.localAddress + ":" + socket.localPort);
+	socket.on('data', function(data) {
+  		try {
+  			console.log("recebeu data: " + data);
+  		}
+  		catch(exception) {
+  			console.log(" socket on data exception");
+    			console.log(exception.toString());
+  		}
 	setTimeout(function(){
 		socket.write('000100000006FF0300040001', 'hex', function(data){
 			console.log("socket write (tentativa): " + data); 
    			})
     		});
 	}, 10000);
+	
 
 server.listen(502);
 
