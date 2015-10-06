@@ -11,7 +11,7 @@ var server = net.createServer (function (socket){
    			})
     		});
 	}, 10000);
-});
+
 server.listen(502);
 
 /*
