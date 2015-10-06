@@ -8,6 +8,7 @@ var server = net.createServer (function (socket){
 	socket.on('data', function(data) {
   		try {
   			console.log("recebeu data: " + data);
+  			decodeData(data);
   		}
   		catch(exception) {
   			console.log(" socket on data exception");
@@ -23,6 +24,18 @@ var server = net.createServer (function (socket){
 	
 
 server.listen(502);
+
+var decodeData = function(airGateData){
+	var foo = airGateData,
+    	res = [ ];
+
+	foo.split('').forEach(function( letter ) {
+    		var bin = letter.charCodeAt( 0 ).toString( 2 ),padding = 8 - bin.length;
+    		res.push( new Array( padding+1 ).join( '0' ) + bin );
+	});
+	console.log( res );	
+}
+
 
 /*
 
