@@ -1,6 +1,3 @@
-console.log("rodou");
-/*
-
 var net = require("net");
 var server = net.createServer (function (socket){ 
 	console.log("airgate conectado");
@@ -11,6 +8,7 @@ var server = net.createServer (function (socket){
 	
 });
 server.listen(502);
+console.log("aplicacao iniciada");
 
 
 var readAirGate = function(ipAddress){
@@ -28,12 +26,11 @@ var modbus = require('./modbus');
 	// make some calls
 	client.readInputRegister(0, 10, function (resp, err) {
 		if(err) { console.log(err);}
-		console.log(resp)
+		console.log(resp);
 	  // resp will look like { fc: 4, byteCount: 20, register: [ values 0 - 10 ] }
 	});
 }
 
-*/
 
 /*
 
