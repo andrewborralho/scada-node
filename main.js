@@ -14,6 +14,7 @@ var readAirGate = function(ipAddress){
 	
 var modbus = require('./modbus');
 
+	console.log(ipAddress);
 	// create a modbus client
 	var client = modbus.createTCPClient(502, ipAddress, function (err) {
 	    if (err) {
