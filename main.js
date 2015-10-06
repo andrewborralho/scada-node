@@ -1,18 +1,3 @@
-var net = require('net');
-var client = net.connect({port: 8124},function() { //'connect' listener
-	console.log('connected to server!');
-	client.write('world!\r\n');
-});
-client.on('data', function(data) {
-  console.log(data.toString());
-  client.end();
-});
-client.on('end', function() {
-  console.log('disconnected from server');
-});
-
-
-/*
 
 var net = require("net");
 var server = net.createServer (function (socket){ 
@@ -20,6 +5,23 @@ var server = net.createServer (function (socket){
 	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	console.log(' address :' + socket.address().address + ":" +  socket.address().port);
 	console.log(' local :' + socket.localAddress + ":" + socket.localPort);
+	readAirGate(ipAddress);
+});
+server.listen(502);
+
+var readAirGate = function(ipAddress) {
+
+	var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
+	var client = require('modbus-stack/client').createClient(502, ipAddress);
+	var req = client.request(RHR, 0, 50);  // Read 50 contiguous registers from 0
+	req.on('response', function(registers) {
+  		console.log(registers);
+  		client.end();
+	});
+}
+
+/*
+
 
 	socket.on('connect', function () {
 		console.log("socket connect sucesso: " + data); 
@@ -32,11 +34,8 @@ var server = net.createServer (function (socket){
     	socket.on('data', function (data) {
 		console.log("socket data sucesso: " + data); 
     	});
-	
-});
-server.listen(502);
+*/
 
-/*
 
 /*
 var readAirGate = function(ipAddress){
