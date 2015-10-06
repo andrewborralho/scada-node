@@ -8,7 +8,7 @@ var server = net.createServer (function (socket){
 	socket.on('data', function(data) {
   		try {
   			console.log("recebeu data: " + data);
-  			decodeData(data);
+  			console.log(toBin(data));
   		}
   		catch(exception) {
   			console.log(" socket on data exception");
@@ -25,15 +25,20 @@ var server = net.createServer (function (socket){
 
 server.listen(502);
 
-var decodeData = function(airGateData){
-	var foo = airGateData;
-    	var res = [ ];
-
-	foo.split('').forEach(function( letter ) {
-    		var bin = letter.charCodeAt( 0 ).toString( 2 ),padding = 8 - bin.length;
-    		res.push( new Array( padding+1 ).join( '0' ) + bin );
-	});
-	console.log( res );	
+function toBin(str){
+ var st,i,j,d;
+ var arr = [];
+ var len = str.length;
+ for (i = 1; i<=len; i++){
+                //reverse so its like a stack
+  d = str.charCodeAt(len-i);
+  for (j = 0; j < 8; j++) {
+   arr.push(d%2);
+   d = Math.floor(d/2);
+  }
+ }
+        //reverse all bits again.
+ return arr.reverse().join("");
 }
 
 
