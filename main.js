@@ -20,7 +20,7 @@ client.request(fc, startAddress, numToRead, function(err, response) {
   response.forEach(function(register, i) {
     console.log(
       ("Sensor " + String(startAddress + i) + ":\t") +
-      (String(register/10).bold + '\u00B0F')
+      (String(register/10) + '\u00B0F')
      );
   });
 
