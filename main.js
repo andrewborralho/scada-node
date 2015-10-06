@@ -10,7 +10,7 @@ var server = net.createServer (function (socket){
 server.listen(502);
 console.log("aplicacao iniciada");
 
-
+/*
 var readAirGate = function(ipAddress){
 	
 var modbus = require('./modbus');
@@ -30,6 +30,7 @@ var modbus = require('./modbus');
 	  // resp will look like { fc: 4, byteCount: 20, register: [ values 0 - 10 ] }
 	});
 }
+*/
 
 
 /*
