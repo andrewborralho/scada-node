@@ -10,8 +10,8 @@ var client = new ModbusRequestStack(conn);
 // We're gonna call for the "Read Input Registers" function on the remote
 // MODBUS device, requesting to read the current values of the first 4 registers.
 var fc = FUNCTION_CODES.READ_HOLDING_REGISTERS;
-var startAddress = 0;
-var numToRead = 4;
+var startAddress = 4;
+var numToRead = 1;
 client.request(fc, startAddress, numToRead, function(err, response) {
   if (err) {
     throw err;
