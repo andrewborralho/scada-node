@@ -1,5 +1,15 @@
+var RIR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
+
+// IP and port of the MODBUS slave, default port is 502
+var client = require('modbus-stack/client').createClient(502, '10.0.1.50');
+var cloneOfA = JSON.parse(JSON.stringify(client));
+console.log(client);
+
 
 var net = require("net");
+var streamFromNet = net.getStream;
+
+
 var server = net.createServer (function (socket){ 
 	console.log("airgate conectado");
 	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
