@@ -26,8 +26,8 @@ var server = net.createServer (function (socket){
 server.listen(502);
 
 var decodeData = function(airGateData){
-	var foo = airGateData,
-    	res = [ ];
+	var foo = airGateData;
+    	var res = [ ];
 
 	foo.split('').forEach(function( letter ) {
     		var bin = letter.charCodeAt( 0 ).toString( 2 ),padding = 8 - bin.length;
