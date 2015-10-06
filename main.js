@@ -13,6 +13,7 @@ var server = net.createServer (function (socket){
   			console.log(" socket on data exception");
     			console.log(exception.toString());
   		}
+	});
 	setTimeout(function(){
 		socket.write('000100000006FF0300040001', 'hex', function(data){
 			console.log("socket write (tentativa): " + data); 
