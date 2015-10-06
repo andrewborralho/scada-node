@@ -8,7 +8,6 @@ var server = net.createServer (function (socket){
 	
 });
 server.listen(502);
-console.log("aplicacao iniciada");
 
 /*
 var readAirGate = function(ipAddress){
