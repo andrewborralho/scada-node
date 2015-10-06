@@ -4,7 +4,7 @@ var server = net.createServer (function (socket){
 	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	console.log(' address :' + socket.address().address + ":" +  socket.address().port);
 	console.log(' local :' + socket.localAddress + ":" + socket.localPort);
-	readAirGate(socket.remoteAddress);
+	//readAirGate(socket.remoteAddress);
 	
 });
 server.listen(502);
