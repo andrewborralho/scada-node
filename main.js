@@ -1,17 +1,22 @@
 var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
 var net = require('net');
 
-// Client eh uma stream vazia.
-var modbusClientModule = require('modbus-stack/client');
+/*
+function AirGateClient () {
+	if ( !(this instanceof AirGateClient) )
+      return new AirGateClient();
+}
+*/
 
-global.modBusStackClient = new modbusClientModule.createClient();
+var tooTallClient = new require('modbus-stack/client')();
+
 
 var callAirGate = function(){
 	console.log("tentando chamar airgate...");
-	client.request(RHR, 0, 10, function(err, response) {
+	tooTallClient.request(RHR, 0, 10, function(err, response) {
   		if (err) {throw err; console.log(err);}
   		console.log(response);
-  		client.end();
+  		tooTallClient.end();
 	});
 }
 
@@ -21,9 +26,10 @@ var server = net.createServer (function (socket){
 	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	//console.log(' address :' + socket.address().address + ":" +  socket.address().port);
 	//console.log(' local :' + socket.localAddress + ":" + socket.localPort);
+	 
 	
-	socket.pipe(global.modBusStackClient);
-	global.modBusStackClient.pipe(socket);
+	socket.pipe(tooTallClient);
+	tooTallClient.pipe(socket);
 	
 	setTimeout(callAirGate, 6000);
 	
