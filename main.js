@@ -33,9 +33,10 @@ var server = net.createServer (function (socket){
 	global.socket = socket;
 	//console.log(' address :' + socket.address().address + ":" +  socket.address().port);
 	//console.log(' local :' + socket.localAddress + ":" + socket.localPort);
-	callAirGate(stream);
 	
-	setTimeout(callAirGate, 6000);
+	setTimeout(function(){
+		callAirGate() 
+	},6000);
 	
 }, 10000);
 
