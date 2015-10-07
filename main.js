@@ -1,21 +1,39 @@
 var RIR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
 
-// IP and port of the MODBUS slave, default port is 502
-var client = require('modbus-stack/client').createClient(502, '10.0.1.50');
-var cloneOfA = JSON.parse(JSON.stringify(client));
-console.log(client);
+// Client eh uma stream vazia.
+global.modBusStackClient = require('modbus-stack/client').Client();
 
 
-var net = require("net");
-var streamFromNet = net.getStream;
+var callAirGate = function(){
+	var req = global.modBusStackClient.request(RHR, 0, 10);  // Read 10 contiguous registers from 0
+	console.log("tentando chamar airgate...");
+	req.on('response', function(registers) {
+  		console.log(registers);
+  		global.modBusStackClient.end();
+	});
+}
 
 
 var server = net.createServer (function (socket){ 
 	console.log("airgate conectado");
 	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
-	console.log(' address :' + socket.address().address + ":" +  socket.address().port);
-	console.log(' local :' + socket.localAddress + ":" + socket.localPort);
-	socket.on('data', function(data) {
+	//console.log(' address :' + socket.address().address + ":" +  socket.address().port);
+	//console.log(' local :' + socket.localAddress + ":" + socket.localPort);
+	
+	socket.pipe(global.modBusStackClient);
+	global.modBusStackClient.pipe(socket);
+	
+	setTimeout(callAirGate, 6000);
+	
+}, 10000);
+
+
+	
+
+server.listen(502);
+
+/*
+socket.on('data', function(data) {
   		try {
   			console.log("recebeu data: " + data);
   		}
@@ -28,11 +46,8 @@ var server = net.createServer (function (socket){
 		socket.write('000100000006FF0300040001', 'hex', function(data){
 			console.log("socket write (tentativa): " + data); 
    			})
-    		});
-	}, 10000);
-	
-
-server.listen(502);
+    	});
+*/
 
 
 
