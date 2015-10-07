@@ -1,17 +1,17 @@
-var RIR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
+var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
+
 
 // Client eh uma stream vazia.
 var modbusClientModule = require('modbus-stack/client');
 
-global.modBusStackClient = new modbusClientModule.Client();
-
+global.modBusStackClient = new modbusClientModule.createClient();
 
 var callAirGate = function(){
-	var req = global.modBusStackClient.request(RHR, 0, 10);  // Read 10 contiguous registers from 0
 	console.log("tentando chamar airgate...");
-	req.on('response', function(registers) {
-  		console.log(registers);
-  		global.modBusStackClient.end();
+	client.request(RHR, 0, 10, function(err, response) {
+  		if (err) {throw err; console.log(err);}
+  		console.log(response);
+  		client.end();
 	});
 }
 
