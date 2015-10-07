@@ -1,7 +1,9 @@
 var RIR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
 
 // Client eh uma stream vazia.
-global.modBusStackClient = require('modbus-stack/client').Client();
+var modbusClientModule = require('modbus-stack/client');
+
+global.modBusStackClient = new modbusClientModule.Client();
 
 
 var callAirGate = function(){
