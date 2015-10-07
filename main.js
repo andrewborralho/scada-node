@@ -1,6 +1,6 @@
 var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
 var net = require('net');
-var modbus = require('./modbus-stack');
+var modbus = require('modbus-stack/modbus-stack');
 
 /*
 function AirGateClient () {
