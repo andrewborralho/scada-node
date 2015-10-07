@@ -1,5 +1,5 @@
 var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
-
+var net = require('net');
 
 // Client eh uma stream vazia.
 var modbusClientModule = require('modbus-stack/client');
