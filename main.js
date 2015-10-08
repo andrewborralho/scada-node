@@ -39,7 +39,7 @@ var server = net.createServer (function (socket){
 	
 	global.socket = socket;
 	console.log("acionando end no socket 1...");
-	socket.end();
+	socket.destroy();
 	
 	setTimeout(function(){
 		callAirGate() 
