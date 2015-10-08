@@ -46,7 +46,12 @@ var server = net.createServer (function (socket){
 
 	
 	setTimeout(function(){
-		callAirGate() 
+		try {
+    			callAirGate() 	
+		}
+		catch(err) {
+			console.log("airgate error: " + err)
+		}
 	},6000);
 	
 }, 10000);
@@ -64,7 +69,7 @@ socket.on('data', function(data) {
   		catch(exception) {
   			console.log(" socket on data exception");
     			console.log(exception.toString());
-  		}
+  		};
 	});
 	setTimeout(function(){
 		socket.write('000100000006FF0300040001', 'hex', function(data){
