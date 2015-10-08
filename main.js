@@ -2,12 +2,20 @@ var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
 var net = require('net');
 var modbus = require('modbus-stack/modbus-stack');
 
+var serializeObject = function(objectToPrint){
+	var output = '';
+	for (var property in objectToPrint) {
+  		output += property + ': ' + objectToPrint[property]+'; ';
+	}
+	return output;
+}
 
 var tooTallClient = new require('modbus-stack/client')();
 
 tooTallClient.request = function() {
 	console.log("chamando request personalizado");
-	console.log("global.socket: " + JSON.stringify(global.socket));
+	
+	console.log("global.socket: " + serializeObject(global.socket));
   	var req = new modbus.ModbusRequestStack(global.socket);
   	req.request.apply(req, arguments);
   	return req;
