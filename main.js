@@ -5,7 +5,7 @@ var modbus = require('modbus-stack/modbus-stack');
 var modClient = require('modbus-stack/client');
 
 modClient.createClient = function(port, host) {
-  var s = new Client();
+  var s = new modClient();
   global.socket.pipe(s);
   s.pipe(global.socket);
   return s;
