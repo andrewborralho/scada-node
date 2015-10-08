@@ -1,3 +1,7 @@
+var Put = require('put');
+var BufferList = require('bufferlist').BufferList;
+var Binary = require('bufferlist/binary').Binary;
+
 
 var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
 var net = require('net');
@@ -18,13 +22,8 @@ var callAirGate = function(){
 	});
 
 	var req = client.request(RHR, 0, 10);
-
-	req.on('data', function(data) { console.log("	data socket 2: " + data);});
 	req.on('error', function(err) { console.log("	erro socket 2: " + err);});
 	req.on('response', function(registers) {console.log("	response socket 2: " + registers);});
-	req.on('end', function() { console.log("	end socket 2");});
-	req.on('close', function() { console.log("	close socket 2");});
-
 }
 
 
