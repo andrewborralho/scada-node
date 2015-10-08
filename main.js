@@ -7,7 +7,7 @@ var tooTallClient = new require('modbus-stack/client')();
 
 tooTallClient.request = function() {
 	console.log("chamando request personalizado");
-	console.log("global.socket: " + global.socket);
+	console.log("global.socket: " + JSON.stringify(global.socket));
   	var req = new modbus.ModbusRequestStack(global.socket);
   	req.request.apply(req, arguments);
   	return req;
