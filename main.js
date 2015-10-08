@@ -16,7 +16,7 @@ var callAirGate = function(){
 		console.log(' remote address :' + secondSocket.remoteAddress + ":" + secondSocket.remotePort);
 	});
 
-	var req = client.request(RHR, 0, 50);
+	var req = client.request(RHR, 0, 10);
 
 	req.on('data', function(data) { console.log("	data socket 2: " + data);});
 	req.on('error', function(err) { console.log("	erro socket 2: " + err);});
