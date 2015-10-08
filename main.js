@@ -15,6 +15,7 @@ var callAirGate = function(){
 	client.on('connect', function(secondSocket){
 		console.log(" -------- segunda conexao com airgate -------- ");
 		console.log('	remote address :' + secondSocket.remoteAddress + ":" + secondSocket.remotePort);
+		secondSocket.end();
 	});
 
 	var req = client.request(RHR, 0, 10);
