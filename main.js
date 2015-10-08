@@ -4,13 +4,14 @@ var net = require('net');
 var modbus = require('modbus-stack/modbus-stack');
 var modClient = require('modbus-stack/client');
 
-console.log(" _______________ esperando airgate comunicar ___________________ ");
+console.log(" ---- ----------------------------- ---- ");
 
 
 var callAirGate = function(){
-	var client = require('modbus-stack/client').createClient(502, global.globalFirstSocket.remoteAddress);
+	var client = require('modbus-stack/client').createClient(502, global.socket.remoteAddress);
 	client.on('connect', function(secondSocket){
-		console.log(" ---- segunda conexao com airgate... remote address :" + secondSocket.remoteAddress + ":" + secondSocket.remotePort);
+		console.log(" ---- segunda conexao com airgate ---- ");
+		console.log(' remote address :' + secondSocket.remoteAddress + ":" + secondSocket.remotePort);
 	});
 
 	var req = client.request(RHR, 0, 50);
@@ -24,9 +25,10 @@ var callAirGate = function(){
 }
 
 
-var server = net.createServer(function (socket){ 
-	socket.on('connect', function(firstSocket){console.log(" ---- segunda conexao com airgate... remote address :" + firstSocket.remoteAddress + ":" + firstSocket.remotePort);});
-
+var server = net.createServer (function (socket){ 
+	console.log(" ---- primeira conexao com airgate ---- ");
+	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
+	
 	socket.on('error', function(err) { console.log("	erro socket 1: " + err);});
 	socket.on('end', function() { console.log("	end socket 1");});
 	socket.on('data', function(data) { console.log("	data socket 1: " + data);});
@@ -35,19 +37,19 @@ var server = net.createServer(function (socket){
 
 	
 	
-	global.globalFirstSocket = socket;
-	//setTimeout(function(){console.log("acionando end no socket 1...");socket.end();},10000);
-	
+	global.socket = socket;
+	console.log("acionando end no socket 1...");
+	socket.end();
 	
 	setTimeout(function(){
-		console.log(" _______________ abrindo nova conexao com airgate ___________________ ");
 		callAirGate() 
 	},6000);
 	
-}, 8000);
+}, 10000);
 
 
 server.listen(502);
+
 
 
 /*
