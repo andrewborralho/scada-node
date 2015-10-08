@@ -4,34 +4,32 @@ var net = require('net');
 var modbus = require('modbus-stack/modbus-stack');
 var modClient = require('modbus-stack/client');
 
-modClient.createClient = function(port, host) {
-  var s = new modClient();
-  global.socket.pipe(s);
-  s.pipe(global.socket);
-  return s;
-}
 
 
 var callAirGate = function(){
-	console.log("tentando chamar airgate...");
-	global.socket.resume();
-	setTimeout(function(){},3000);
-	global.tooTallClient.request(RHR, 3, 4, function(err, response) {
-  		if (err) {throw err; console.log(err);}
-  		console.log("	airgate responde: " + response);
-  		global.tooTallClient.end();
-	});
+	var client = require('modbus-stack/client').createClient(502, '10.0.1.50');
+	client.on('connect', function(){
+		console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
+	})
+
+	var req = client.request(RHR, 0, 50);
+
+	req.on('error', function(err){
+    		console.log("Error: "+err.message);
+	})
+	
+	req.on('response', function(registers) {
+  		console.log(registers);
+  		client.end();
+	}
 }
 
 
 var server = net.createServer (function (socket){ 
 	console.log(" ---- airgate conectado ---- ");
 	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
-	socket.pause();
 	global.socket = socket;
-	global.tooTallClient = modClient.createClient(1,1);
-	//console.log(' address :' + socket.address().address + ":" +  socket.address().port);
-	//console.log(' local :' + socket.localAddress + ":" + socket.localPort);
+	socket.end();
 	
 	setTimeout(function(){
 		callAirGate() 
