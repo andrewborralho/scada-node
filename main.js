@@ -14,8 +14,7 @@ var tooTallClient = new require('modbus-stack/client')();
 
 tooTallClient.request = function() {
 	console.log("chamando request personalizado");
-	
-	console.log("global.socket: " + serializeObject(global.socket));
+	console.log("socket: " + global.socket.remoteAddress);
   	var req = new modbus.ModbusRequestStack(global.socket);
   	req.request.apply(req, arguments);
   	return req;
@@ -25,7 +24,7 @@ var callAirGate = function(){
 	console.log("tentando chamar airgate...");
 	tooTallClient.request(RHR, 0, 10, function(err, response) {
   		if (err) {throw err; console.log(err);}
-  		console.log(response);
+  		console.log("	airgate responde: " + response);
   		tooTallClient.end();
 	});
 }
