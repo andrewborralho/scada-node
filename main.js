@@ -2,19 +2,15 @@ var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
 var net = require('net');
 var modbus = require('modbus-stack/modbus-stack');
 
-/*
-function AirGateClient () {
-	if ( !(this instanceof AirGateClient) )
-      return new AirGateClient();
-}
-*/
 
 var tooTallClient = new require('modbus-stack/client')();
 
 tooTallClient.request = function() {
-  var req = new modbus.ModbusRequestStack(global.socket);
-  req.request.apply(req, arguments);
-  return req;
+	console.log("chamando request personalizado");
+	console.log("global.socket: " + global.socket);
+  	var req = new modbus.ModbusRequestStack(global.socket);
+  	req.request.apply(req, arguments);
+  	return req;
 }
 
 var callAirGate = function(){
