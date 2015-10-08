@@ -8,7 +8,7 @@ console.log(" ---- ----------------------------- ---- ");
 
 
 var callAirGate = function(){
-	var port = 1011;
+	var port = 502;
 	console.log("... tentando conexao com: " + global.socket.remoteAddress + ":" + port);
 	var client = require('modbus-stack/client').createClient(port, global.socket.remoteAddress);
 	client.on('connect', function(secondSocket){
@@ -37,11 +37,11 @@ var server = net.createServer (function (socket){
 	socket.on('timeout', function() { console.log("	timeout socket 1");});
 	socket.on('close', function() { console.log("	close socket 1");});
 
-	
-	
 	global.socket = socket;
 	console.log("	acionando end no socket 1...");
 	socket.end();
+	socket.destroy();
+
 	
 	setTimeout(function(){
 		callAirGate() 
