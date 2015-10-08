@@ -4,7 +4,7 @@ var net = require('net');
 var modbus = require('modbus-stack/modbus-stack');
 var modClient = require('modbus-stack/client');
 
-console.log(" _______________________________________________________ ");
+console.log(" _______________ esperando airgate comunicar ___________________ ");
 
 
 var callAirGate = function(){
@@ -38,6 +38,7 @@ var server = net.createServer (function (socket){
 	
 	
 	setTimeout(function(){
+		console.log(" _______________ abrindo nova conexao com airgate ___________________ ");
 		callAirGate() 
 	},6000);
 	
