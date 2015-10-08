@@ -11,7 +11,7 @@ modClient.createClient = function(port, host) {
   return s;
 }
 
-var tooTallClient = new modClient();
+var tooTallClient = modClient.createClient(1,1);
 
 /*
 
