@@ -14,9 +14,9 @@ var tooTallClient = new require('modbus-stack/client')();
 
 tooTallClient.request = function() {
 	console.log("socket: " + global.socket.remoteAddress);
-  	var req = new modbus.ModbusRequestStack(global.socket);
+	var req = new modbus.ModbusRequestStack(this);
+	req.stream = global.socket;
   	req.request.apply(req, arguments);
-  	req.stream = global.socket;
   	return req;
 }
 
