@@ -4,6 +4,7 @@ var net = require('net');
 var modbus = require('modbus-stack/modbus-stack');
 var modClient = require('modbus-stack/client');
 
+console.log("");
 console.log(" ---- ----------------------------- ---- ");
 
 
