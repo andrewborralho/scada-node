@@ -4,31 +4,41 @@ var net = require('net');
 var modbus = require('modbus-stack/modbus-stack');
 var modClient = require('modbus-stack/client');
 
+console.log(" ---- ----------------------------- ---- ");
 
 
 var callAirGate = function(){
-	var client = require('modbus-stack/client').createClient(502, socket.remoteAddress);
+	var client = require('modbus-stack/client').createClient(502, global.socket.remoteAddress);
 	client.on('connect', function(secondSocket){
-		console.log(' reconexao com airgate :' + secondSocket.remoteAddress + ":" + secondSocket.remotePort);
+		console.log(" ---- segunda conexao com airgate ---- ");
+		console.log(' remote address :' + secondSocket.remoteAddress + ":" + secondSocket.remotePort);
 	});
 
 	var req = client.request(RHR, 0, 50);
 
-	req.on('data', function(err){
-    		console.log("Data: " + err.message);
-	});
-	
-	req.on('response', function(registers) {
-  		console.log("	recebeu dados: " + registers);
-  		client.end();
-	});
+	req.on('data', function(data) { console.log("	data socket 2: " + data);});
+	req.on('error', function(err) { console.log("	erro socket 2: " + err);});
+	req.on('response', function(registers) {console.log("	response socket 2: " + registers);});
+	req.on('end', function() { console.log("	end socket 2");});
+	req.on('close', function() { console.log("	close socket 2");});
+
 }
 
 
 var server = net.createServer (function (socket){ 
 	console.log(" ---- primeira conexao com airgate ---- ");
 	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
+	
+	socket.on('error', function(err) { console.log("	erro socket 1: " + err);});
+	socket.on('end', function() { console.log("	end socket 1");});
+	socket.on('data', function(data) { console.log("	data socket 1: " + data);});
+	socket.on('timeout', function() { console.log("	timeout socket 1");});
+	socket.on('close', function() { console.log("	close socket 1");});
+
+	
+	
 	global.socket = socket;
+	console.log("acionando end no socket 1...");
 	socket.end();
 	
 	setTimeout(function(){
