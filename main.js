@@ -1,24 +1,27 @@
+
 var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
 var net = require('net');
 var modbus = require('modbus-stack/modbus-stack');
+var modClient = require('modbus-stack/client');
 
-var serializeObject = function(objectToPrint){
-	var output = '';
-	for (var property in objectToPrint) {
-  		output += property + ': ' + objectToPrint[property]+'; ';
-	}
-	return output;
+modClient.createClient = function(port, host) {
+  var s = new Client();
+  global.socket.pipe(s);
+  s.pipe(global.socket);
+  return s;
 }
 
-var tooTallClient = new require('modbus-stack/client')();
+var tooTallClient = new modClient();
+
+/*
 
 tooTallClient.request = function() {
 	console.log("socket: " + global.socket.remoteAddress);
-	var req = new modbus.ModbusRequestStack(this);
-	req.stream = global.socket;
+	var req = new modbus.ModbusRequestStack(global.socket);
   	req.request.apply(req, arguments);
   	return req;
 }
+*/
 
 var callAirGate = function(){
 	console.log("tentando chamar airgate...");
@@ -31,7 +34,7 @@ var callAirGate = function(){
 
 
 var server = net.createServer (function (socket){ 
-	console.log("airgate conectado");
+	console.log(" ---- airgate conectado ---- ");
 	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	global.socket = socket;
 	//console.log(' address :' + socket.address().address + ":" +  socket.address().port);
