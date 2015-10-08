@@ -9,7 +9,7 @@ console.log(" ---- ----------------------------- ---- ");
 
 
 var callAirGate = function(){
-	var port = 502;
+	var port = 1027;
 	console.log("tentando conexao com: " + global.socket.remoteAddress + ":" + port);
 	var client = require('modbus-stack/client').createClient(port, global.socket.remoteAddress);
 	client.on('connect', function(secondSocket){
@@ -17,6 +17,7 @@ var callAirGate = function(){
 		console.log('	remote address :' + secondSocket.remoteAddress + ":" + secondSocket.remotePort);
 		secondSocket.end();
 	});
+	client.end();
 
 	var req = client.request(RHR, 0, 10);
 
@@ -32,7 +33,7 @@ var callAirGate = function(){
 var server = net.createServer (function (socket){ 
 	console.log("");
 	console.log(" -------- primeira conexao com airgate -------- ");
-	console.log('		remote address :' + socket.remoteAddress + ":" + socket.remotePort);
+	console.log('	remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	
 	socket.on('error', function(err) { console.log("	erro socket 1: " + err);});
 	socket.on('end', function() { console.log("	end socket 1");});
