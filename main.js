@@ -14,7 +14,7 @@ modClient.createClient = function(port, host) {
 
 var callAirGate = function(){
 	console.log("tentando chamar airgate...");
-	global.tooTallClient.request(RHR, 0, 10, function(err, response) {
+	global.tooTallClient.request(RHR, 3, 4, function(err, response) {
   		if (err) {throw err; console.log(err);}
   		console.log("	airgate responde: " + response);
   		global.tooTallClient.end();
