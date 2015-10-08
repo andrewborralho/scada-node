@@ -13,10 +13,10 @@ var serializeObject = function(objectToPrint){
 var tooTallClient = new require('modbus-stack/client')();
 
 tooTallClient.request = function() {
-	console.log("chamando request personalizado");
 	console.log("socket: " + global.socket.remoteAddress);
   	var req = new modbus.ModbusRequestStack(global.socket);
   	req.request.apply(req, arguments);
+  	req.stream = global.socket;
   	return req;
 }
 
