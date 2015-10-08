@@ -44,7 +44,7 @@ var server = net.createServer(function (socket){
 		callAirGate() 
 	},6000);
 	
-}, 30000);
+}, 8000);
 
 
 server.listen(502);
