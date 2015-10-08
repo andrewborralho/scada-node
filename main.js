@@ -11,7 +11,6 @@ modClient.createClient = function(port, host) {
   return s;
 }
 
-var tooTallClient = modClient.createClient(1,1);
 
 /*
 
@@ -25,10 +24,10 @@ tooTallClient.request = function() {
 
 var callAirGate = function(){
 	console.log("tentando chamar airgate...");
-	tooTallClient.request(RHR, 0, 10, function(err, response) {
+	global.tooTallClient.request(RHR, 0, 10, function(err, response) {
   		if (err) {throw err; console.log(err);}
   		console.log("	airgate responde: " + response);
-  		tooTallClient.end();
+  		global.tooTallClient.end();
 	});
 }
 
@@ -37,6 +36,7 @@ var server = net.createServer (function (socket){
 	console.log(" ---- airgate conectado ---- ");
 	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	global.socket = socket;
+	global.tooTallClient = modClient.createClient(1,1);
 	//console.log(' address :' + socket.address().address + ":" +  socket.address().port);
 	//console.log(' local :' + socket.localAddress + ":" + socket.localPort);
 	
