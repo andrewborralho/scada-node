@@ -9,7 +9,9 @@ console.log(" _______________ esperando airgate comunicar ___________________ ")
 
 var callAirGate = function(){
 	var client = require('modbus-stack/client').createClient(502, global.socket.remoteAddress);
-	client.on('connect', function(secondSocket){console.log(" ---- segunda conexao com airgate... remote address :" + secondSocket.remoteAddress + ":" + secondSocket.remotePort);});
+	client.on('connect', function(secondSocket){
+		console.log(" ---- segunda conexao com airgate... remote address :" + secondSocket.remoteAddress + ":" + secondSocket.remotePort);
+	});
 
 	var req = client.request(RHR, 0, 50);
 
