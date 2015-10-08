@@ -14,6 +14,7 @@ modClient.createClient = function(port, host) {
 
 var callAirGate = function(){
 	console.log("tentando chamar airgate...");
+	global.socket.resume();
 	global.tooTallClient.request(RHR, 3, 4, function(err, response) {
   		if (err) {throw err; console.log(err);}
   		console.log("	airgate responde: " + response);
@@ -25,6 +26,7 @@ var callAirGate = function(){
 var server = net.createServer (function (socket){ 
 	console.log(" ---- airgate conectado ---- ");
 	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
+	socket.pause();
 	global.socket = socket;
 	global.tooTallClient = modClient.createClient(1,1);
 	//console.log(' address :' + socket.address().address + ":" +  socket.address().port);
