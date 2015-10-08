@@ -9,7 +9,7 @@ console.log(" ---- ----------------------------- ---- ");
 
 
 var callAirGate = function(){
-	var port = 1027;
+	var port = 1025;
 	console.log("tentando conexao com: " + global.socket.remoteAddress + ":" + port);
 	var client = require('modbus-stack/client').createClient(port, global.socket.remoteAddress);
 	client.on('connect', function(secondSocket){
