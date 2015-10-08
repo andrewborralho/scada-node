@@ -34,10 +34,7 @@ var server = net.createServer (function (socket){
 	
 	
 	global.socket = socket;
-	setTimeout(function(){
-		console.log("acionando end no socket 1...");
-		socket.end();
-	},10000);
+	//setTimeout(function(){console.log("acionando end no socket 1...");socket.end();},10000);
 	
 	
 	setTimeout(function(){
