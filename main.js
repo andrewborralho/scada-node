@@ -1,26 +1,4 @@
-var net = require("net");
-var server = net.createServer (function (socket){ 
-	console.log("airgate conectado");
-	console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
-	console.log(' address :' + socket.address().address + ":" +  socket.address().port);
-	console.log(' local :' + socket.localAddress + ":" + socket.localPort);
 
-	socket.on('connect', function () {
-		console.log("socket connect sucesso: " + data); 
-
-		socket.write('000100000006FF0300040001', 'hex', function(data){
-			console.log("socket write (tentativa): " + data); 
-   		})
-    	});
-    	
-    	socket.on('data', function (data) {
-		console.log("socket data sucesso: " + data); 
-    	});
-	
-});
-server.listen(502);
-
-/*
 var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
 var net = require('net');
 var modbus = require('modbus-stack/modbus-stack');
@@ -61,7 +39,6 @@ var server = net.createServer (function (socket){
 
 server.listen(502);
 
-*/
 
 /*
 socket.on('data', function(data) {
