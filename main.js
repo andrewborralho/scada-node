@@ -10,18 +10,18 @@ var callAirGate = function(){
 	var client = require('modbus-stack/client').createClient(502, '10.0.1.50');
 	client.on('connect', function(){
 		console.log(' remote address :' + socket.remoteAddress + ":" + socket.remotePort);
-	})
+	});
 
 	var req = client.request(RHR, 0, 50);
 
 	req.on('error', function(err){
     		console.log("Error: "+err.message);
-	})
+	});
 	
 	req.on('response', function(registers) {
   		console.log(registers);
   		client.end();
-	}
+	});
 }
 
 
