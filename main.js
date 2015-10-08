@@ -7,7 +7,7 @@ var modClient = require('modbus-stack/client');
 
 
 var callAirGate = function(){
-	var client = require('modbus-stack/client').createClient(502, '10.0.1.50');
+	var client = require('modbus-stack/client').createClient(502, socket.remoteAddress);
 	client.on('connect', function(){
 		console.log(' segundo remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	});
@@ -19,7 +19,7 @@ var callAirGate = function(){
 	});
 	
 	req.on('response', function(registers) {
-  		console.log(registers);
+  		console.log("	recebeu dados: " + registers);
   		client.end();
 	});
 }
