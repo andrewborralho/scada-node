@@ -18,9 +18,10 @@ var callAirGate = function(socket){
 	var gotResponse = false;
 	// copyStreamParameters(socket, client);
 	
-	client.on('timeout'){console.log('	client timeout');}
-	client.on('data'){console.log('	client data !');
-	
+	client.on('timeout', function(){console.log('	client timeout');});
+	client.on('error', function(){console.log('	client error: ' + error);});
+	client.on('data', function(data){console.log('	client data: ' + data );});
+
 	client.request(RHR, 0, 5, function(err, response) {
   		if (err) {console.log(err);throw err;};
 		console.log("	airgate response OK: " + response);
