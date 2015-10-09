@@ -37,7 +37,8 @@ function copyStreamParameters(source, destiny) {
 var callAirGate = function(socket){
 	console.log("tentando enviar mensagem para: " + socket.remoteAddress + ":" + socket.remotePort);
 	//printObject(socket);
-	var client = new clientModule.Client();
+	var client = clientModule.Client();
+
 	var gotResponse = false;
 	copyStreamParameters(socket, client);
 	
