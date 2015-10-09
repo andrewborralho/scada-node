@@ -5,192 +5,7 @@ var netStream = require('net').Stream;
 var FUNCTION_CODES = Client.FUNCTION_CODES;
 var StreamStack = require('stream-stack').StreamStack;
 var inherits = require('util').inherits;
-var client = Client;
-var server = Server;
 var slice = Array.prototype.slice;
-
-
-var RHR = client.FUNCTION_CODES.READ_HOLDING_REGISTERS;
-var net = require('net');
-
-console.log("");
-console.log(" ---- ----------------------------- ---- ");
-
-
-var callAirGate = function(){
-	var port = 1024;
-	console.log("tentando conexao com: " + global.socket.remoteAddress + ":" + port);
-	var client = Client.createClient(port, global.socket.remoteAddress);
-	client.on('connect', function(secondSocket){
-		console.log(" -------- segunda conexao com airgate -------- ");
-		console.log('	remote address :' + secondSocket.remoteAddress + ":" + secondSocket.remotePort);
-	});
-
-	var req = client.request(RHR, 0, 10);
-	req.on('error', function(err) { console.log("	erro socket 2: " + err);});
-	req.on('response', function(registers) {console.log("	response socket 2: " + registers);});
-}
-
-
-var server = net.createServer (function (socket){ 
-	console.log("");
-	console.log(" -------- primeira conexao com airgate -------- ");
-	console.log('	remote address :' + socket.remoteAddress + ":" + socket.remotePort);
-	
-	socket.on('error', function(err) { console.log("	erro socket 1: " + err);});
-	socket.on('end', function() { console.log("	end socket 1");});
-	socket.on('data', function(data) { console.log("	data socket 1: " + data);});
-	socket.on('timeout', function() { console.log("	timeout socket 1");});
-	socket.on('close', function() { console.log("	close socket 1");});
-
-	global.socket = socket;
-	console.log("	acionando end no socket 1...");
-	socket.end();
-	socket.destroy();
-
-	
-	setTimeout(function(){
-		try {
-    			callAirGate() 	
-		}
-		catch(err) {
-			console.log("airgate error: " + err)
-		}
-	},6000);
-	
-}, 10000);
-
-
-server.listen(502);
-
-
-
-
-
-/*
-socket.on('data', function(data) {
-  		try {
-  			console.log("recebeu data: " + data);
-  		}
-  		catch(exception) {
-  			console.log(" socket on data exception");
-    			console.log(exception.toString());
-  		};
-	});
-	setTimeout(function(){
-		socket.write('000100000006FF0300040001', 'hex', function(data){
-			console.log("socket write (tentativa): " + data); 
-   			})
-    	});
-*/
-
-
-
-/* Streamlined TCP MODBUS server class. Can be used to respond to MODBUS requests
- * from TCP clients. `handlers` can be a function which is invoked for every
- * "request" event, or an Object with keys being the Function Codes your server
- * is going to handle. 
- */
-function Server (handlers) {
-  net.Server.call(this, this._setupConn);
-  if (typeof handlers == 'function') {
-    this.on('request', handlers);
-  } else {
-    this.on('request', this._handler);
-    this.handlers = handlers || {};
-  }
-}
-require('util').inherits(Server, net.Server);
-module.exports = Server;
-
-Server.prototype._setupConn = function(stream) {
-  var self = this;
-  var response = new modbus.ModbusResponseStack(stream);
-  response.on('request', function(request) {
-    self.emit('request', request, response);
-    if (stream.readable && stream.writable) {
-      self._setupConn(stream);
-    }
-  });
-}
-
-// Called for every 'request' event, when a "handlers" Object was passed.
-Server.prototype._handler = function(request, response) {
-  if (request.functionCode in this.handlers) {
-    this.handlers[request.functionCode].call(this, request, response);
-  } else {
-    response.writeException(1);
-  }
-}
-
-// Convenience function to create a MODBUS Server.
-function createServer (handlers) {
-  return new Server(handlers);
-}
-Server.createServer = createServer;
-
-
-// The pattern of 'startAddress' and 'quantity' is used by a lot of
-// MODBUS functions, and can be re-used in the code.
-function parseTwoWord16be(first, second) {
-  return function(bufferlist) {
-    return Binary(bufferlist)
-      .getWord16be(first)
-      .getWord16be(second)
-      .end().vars;
-  }
-}
-
-var no_parameters = function() { return {}; }
-var startAddress_quantity = parseTwoWord16be('startAddress', 'quantity');
-var address_value = parseTwoWord16be('address', 'value');
-
-Server.REQUESTS = {
-  // READ_COILS
-  1: startAddress_quantity,
-  // READ_DISCRETE_INPUTS
-  2: startAddress_quantity,
-  // READ_HOLDING_REGISTERS
-  3: startAddress_quantity,
-  // READ_INPUT_REGISTERS
-  4: startAddress_quantity,
-  // WRITE_SINGLE_COIL
-  5: function(bufferlist) {
-    var rtn = address_value.call(this, bufferlist);
-    rtn.value = rtn.value === 0xff00;
-    return rtn;
-  },
-  // WRITE_SINGLE_REGISTER
-  6: address_value,
-  // READ_EXCEPTION_STATUS (Serial Line Only)
-  7: no_parameters,
-  // GET_COMM_EVENT_COUNTER (Serial Line Only)
-  11: no_parameters,
-  // GET_COMM_EVENT_LOG (Serial Line Only)
-  12: no_parameters,
-  // REPORT_SLAVE_ID (Serial Line Only)
-  17: no_parameters
-};
-
-Server.RESPONSES = {
-  // READ_INPUT_REGISTERS
-  4: function(registers) {
-    if (!Array.isArray(registers) || registers.length != this.request.quantity) {
-      throw new Error('Expected to write an "Array" of length "'+this.request.quantity+'"');
-    }
-    var i=0, l=registers.length, put = Put()
-      .word8(registers.length*2);
-    for (; i<l; i++) {
-      put.word16be(registers[i]);
-    }
-    return put.buffer();
-  }
-};
-
-
-
-
-
 
 
 // The byte length of the "MODBUS Application Protocol" header.
@@ -471,7 +286,6 @@ exports.readFunctionCode = readFunctionCode;
 
 
 
-
 /* TCP MODBUS Client interface, as it's the most usual use-case. */
 function Client () {
   if (!(this instanceof Client)) return new Client();
@@ -550,6 +364,214 @@ Client.RESPONSES = {
     return rtn;
   },
 };
+
+
+
+
+
+
+
+/* Streamlined TCP MODBUS server class. Can be used to respond to MODBUS requests
+ * from TCP clients. `handlers` can be a function which is invoked for every
+ * "request" event, or an Object with keys being the Function Codes your server
+ * is going to handle. 
+ */
+function Server (handlers) {
+  net.Server.call(this, this._setupConn);
+  if (typeof handlers == 'function') {
+    this.on('request', handlers);
+  } else {
+    this.on('request', this._handler);
+    this.handlers = handlers || {};
+  }
+}
+require('util').inherits(Server, net.Server);
+module.exports = Server;
+
+Server.prototype._setupConn = function(stream) {
+  var self = this;
+  var response = new modbus.ModbusResponseStack(stream);
+  response.on('request', function(request) {
+    self.emit('request', request, response);
+    if (stream.readable && stream.writable) {
+      self._setupConn(stream);
+    }
+  });
+}
+
+// Called for every 'request' event, when a "handlers" Object was passed.
+Server.prototype._handler = function(request, response) {
+  if (request.functionCode in this.handlers) {
+    this.handlers[request.functionCode].call(this, request, response);
+  } else {
+    response.writeException(1);
+  }
+}
+
+// Convenience function to create a MODBUS Server.
+function createServer (handlers) {
+  return new Server(handlers);
+}
+Server.createServer = createServer;
+
+
+// The pattern of 'startAddress' and 'quantity' is used by a lot of
+// MODBUS functions, and can be re-used in the code.
+function parseTwoWord16be(first, second) {
+  return function(bufferlist) {
+    return Binary(bufferlist)
+      .getWord16be(first)
+      .getWord16be(second)
+      .end().vars;
+  }
+}
+
+var no_parameters = function() { return {}; }
+var startAddress_quantity = parseTwoWord16be('startAddress', 'quantity');
+var address_value = parseTwoWord16be('address', 'value');
+
+Server.REQUESTS = {
+  // READ_COILS
+  1: startAddress_quantity,
+  // READ_DISCRETE_INPUTS
+  2: startAddress_quantity,
+  // READ_HOLDING_REGISTERS
+  3: startAddress_quantity,
+  // READ_INPUT_REGISTERS
+  4: startAddress_quantity,
+  // WRITE_SINGLE_COIL
+  5: function(bufferlist) {
+    var rtn = address_value.call(this, bufferlist);
+    rtn.value = rtn.value === 0xff00;
+    return rtn;
+  },
+  // WRITE_SINGLE_REGISTER
+  6: address_value,
+  // READ_EXCEPTION_STATUS (Serial Line Only)
+  7: no_parameters,
+  // GET_COMM_EVENT_COUNTER (Serial Line Only)
+  11: no_parameters,
+  // GET_COMM_EVENT_LOG (Serial Line Only)
+  12: no_parameters,
+  // REPORT_SLAVE_ID (Serial Line Only)
+  17: no_parameters
+};
+
+Server.RESPONSES = {
+  // READ_INPUT_REGISTERS
+  4: function(registers) {
+    if (!Array.isArray(registers) || registers.length != this.request.quantity) {
+      throw new Error('Expected to write an "Array" of length "'+this.request.quantity+'"');
+    }
+    var i=0, l=registers.length, put = Put()
+      .word8(registers.length*2);
+    for (; i<l; i++) {
+      put.word16be(registers[i]);
+    }
+    return put.buffer();
+  }
+};
+
+
+
+
+
+var client = Client;
+var server = Server;
+
+
+var RHR = client.FUNCTION_CODES.READ_HOLDING_REGISTERS;
+var net = require('net');
+
+console.log("");
+console.log(" ---- ----------------------------- ---- ");
+
+
+var callAirGate = function(){
+	var port = 1024;
+	console.log("tentando conexao com: " + global.socket.remoteAddress + ":" + port);
+	var client = Client.createClient(port, global.socket.remoteAddress);
+	client.on('connect', function(secondSocket){
+		console.log(" -------- segunda conexao com airgate -------- ");
+		console.log('	remote address :' + secondSocket.remoteAddress + ":" + secondSocket.remotePort);
+	});
+
+	var req = client.request(RHR, 0, 10);
+	req.on('error', function(err) { console.log("	erro socket 2: " + err);});
+	req.on('response', function(registers) {console.log("	response socket 2: " + registers);});
+}
+
+
+var server = net.createServer (function (socket){ 
+	console.log("");
+	console.log(" -------- primeira conexao com airgate -------- ");
+	console.log('	remote address :' + socket.remoteAddress + ":" + socket.remotePort);
+	
+	socket.on('error', function(err) { console.log("	erro socket 1: " + err);});
+	socket.on('end', function() { console.log("	end socket 1");});
+	socket.on('data', function(data) { console.log("	data socket 1: " + data);});
+	socket.on('timeout', function() { console.log("	timeout socket 1");});
+	socket.on('close', function() { console.log("	close socket 1");});
+
+	global.socket = socket;
+	console.log("	acionando end no socket 1...");
+	socket.end();
+	socket.destroy();
+
+	
+	setTimeout(function(){
+		try {
+    			callAirGate() 	
+		}
+		catch(err) {
+			console.log("airgate error: " + err)
+		}
+	},6000);
+	
+}, 10000);
+
+
+server.listen(502);
+
+
+
+
+
+/*
+socket.on('data', function(data) {
+  		try {
+  			console.log("recebeu data: " + data);
+  		}
+  		catch(exception) {
+  			console.log(" socket on data exception");
+    			console.log(exception.toString());
+  		};
+	});
+	setTimeout(function(){
+		socket.write('000100000006FF0300040001', 'hex', function(data){
+			console.log("socket write (tentativa): " + data); 
+   			})
+    	});
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
