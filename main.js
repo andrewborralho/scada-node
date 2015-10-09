@@ -69,25 +69,6 @@ var callAirGate = function(socket){
 	*/
 }
 
-var secondServer = net.createServer (function (secondSocket){ 
-	console.log('	remote address :' + secondSocket.remoteAddress + ":" + secondSocket.remotePort);
-	
-	socket.on('close', function(){console.log('	closed socket');});
-	setTimeout(function(){
-		try {
-			console.log('	socket writable: ' + socket.writable);
-			console.log('	socket readable: ' + socket.readable);
-    			callAirGate(socket) 	
-		}
-		catch(err) {
-			console.log("callAirGate error: " + err)
-		}
-	},3000);
-	
-}, 10000);
-
-
-server.listen(502);
 
 var server = net.createServer (function (socket){ 
 	console.log("");
