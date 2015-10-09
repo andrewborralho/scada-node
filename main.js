@@ -19,17 +19,18 @@ var callAirGate = function(socket){
 		conn.readable = true;
 		console.log('	conn writable: ' + conn.writable);
 		console.log('	conn readable: ' + conn.readable);
+		try {
+			socket.pipe(conn);
+			conn.pipe(socket);
+		}
+		catch(err) {
+			console.log("	pipe socket and conn error: " + err)
+		}
 	}
 	catch(err) {
 		console.log("	conn error: " + err)
 	}
-	try {
-		socket.pipe(conn);
-		conn.pipe(socket);
-	}
-	catch(err) {
-		console.log("	pipe socket and conn error: " + err)
-	}
+	
 	
 	// var conn = require('net').createConnection(port, socket.remoteAddress, function(){console.log('	conn connected !!!');});
 	conn.on('timeout', function(){console.log('	conn timeout');});
