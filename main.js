@@ -12,7 +12,7 @@ console.log("");console.log(" ---- ----------------------------- ---- ");
 
 var callAirGate = function(socket){
 	console.log("tentando enviar RHR para: " + socket.remoteAddress + ":" + socket.remotePort);
-	printObject(socket.server);
+	printObject(socket.server.server);
 	var client = new ModbusRequestStack(socket);
 
 	var gotResponse = false;
