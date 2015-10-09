@@ -14,7 +14,12 @@ var callAirGate = function(socket){
 	var port = socket.remotePort;
 	var conn;
 	try {
-		conn = require('net').createConnection(3000, { fd: null,allowHalfOpen: false,readable: true,writable: true});
+		var socketOptions = { fd: null,allowHalfOpen: false,readable: true,writable: true};
+		var newSocket = new net.Socket(socketOptions);
+		console.log('	newSocket writable: ' + conn.writable);
+		console.log('	newSocket readable: ' + conn.readable);
+		conn = newSocket.connect(3000);
+		// conn = require('net').createConnection(3000, { fd: null,allowHalfOpen: false,readable: true,writable: true});
 		console.log('	conn writable: ' + conn.writable);
 		console.log('	conn readable: ' + conn.readable);
 	}
