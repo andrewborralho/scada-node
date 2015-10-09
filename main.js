@@ -15,7 +15,7 @@ var callAirGate = function(socket){
   		return stream;
 	}
 	
-	clientModule.prototype.request = function() {
+	clientModule.request = function() {
   		var req = new modbus.ModbusRequestStack(this);
   		req.request.apply(req, arguments);
   		return req;
