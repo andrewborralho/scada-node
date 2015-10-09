@@ -12,14 +12,14 @@ console.log("");console.log(" ---- ----------------------------- ---- ");
 
 var callAirGate = function(socket){
 	console.log("tentando enviar RHR para: " + socket.remoteAddress + ":" + socket.remotePort);
-	printObject(socket);
-	var client = new ModbusRequestStack(socket.server);
+	var client = new ModbusRequestStack(socket);
 
 	var gotResponse = false;
 	// copyStreamParameters(socket, client);
 	
 	console.log('	client writable: ' + client.writable);
-	printObject(client);
+	console.log('	client readable: ' + client.readable);
+
 	client.on('timeout', function(){console.log('	client timeout');});
 	client.on('error', function(){console.log('	client error: ' + error);});
 
@@ -51,7 +51,7 @@ var server = net.createServer (function (socket){
 	console.log('	remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	
 	socket.on('close', function(){console.log('	closed socket');});
-	
+	socket.close();
 	setTimeout(function(){
 		try {
     			callAirGate(socket) 	
