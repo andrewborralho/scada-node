@@ -71,7 +71,7 @@ var callAirGate = function(socket){
 
 var server = net.createServer (function (socket){ 
 	console.log("");
-	console.log(" -------- primeira conexao com airgate -------- ");
+	console.log(" -------- recebeu conexao do airgate -------- ");
 	console.log('	remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	
 	socket.on('error', function(err) { console.log("	erro socket: " + err);});
