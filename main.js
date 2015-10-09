@@ -12,8 +12,16 @@ var callAirGate = function(socket){
 	console.log("tentando enviar mensagem para: " + socket.remoteAddress + ":" + socket.remotePort);
 	var client = new modbus.ModbusResponseStack(socket);
 	var gotResponse = false;
+	/*
+	client.prototype.request = function() {
+  		var req = new modbus.ModbusRequestStack(this);
+  		req.request.apply(req, arguments);
+  		return req;
+	}
+	*/
+	
 	client.request(FC.READ_INPUT_REGISTERS, 0, 5, function(err, response) {
-  		if (err) {console.log(err);};
+  		if (err) {console.log(err);throw err;};
 		console.log("	airgate response OK: " + response);
   		client.end();
 	});
