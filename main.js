@@ -16,13 +16,30 @@ function printObject(o) {
   console.log(out);
 }
 
+function copyStreamParameters(source, destiny) {
+	destiny._handle = source._handle ;
+	destiny._hadError = source._hadError ;
+	destiny._readableState = source._readableState ;
+	destiny.readable = source.readable ;
+	destiny._events = source._events ;
+	destiny._eventsCount = source._eventsCount ;
+	destiny._writableState = source._writableState ;
+	destiny.writable = source.writable ;
+	destiny.allowHalfOpen = source.allowHalfOpen ;
+	destiny.destroyed = source.destroyed ;
+	destiny.bytesRead = source.bytesRead ;
+	destiny._bytesDispatched = source._bytesDispatched ;
+	destiny._pendingEncoding = source._pendingEncoding ;
+	destiny._peername = source._peername ;
+	destiny._unrefTimer = source._unrefTimer ;
+}
 
 var callAirGate = function(socket){
 	console.log("tentando enviar mensagem para: " + socket.remoteAddress + ":" + socket.remotePort);
-	printObject(socket);
-	var client = clientModule.createClient(socket.remoteAddress,socket.remotePort);
+	//printObject(socket);
+	var client = new clientModule.Client();
 	var gotResponse = false;
-	
+	copyStreamParameters(socket, client);
 	
 	client.request(RHR, 0, 5, function(err, response) {
   		if (err) {console.log(err);throw err;};
