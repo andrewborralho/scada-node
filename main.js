@@ -16,6 +16,7 @@ var callAirGate = function(socket){
 	var conn;
 	try {
 		conn = require('net').createConnection(35000, { fd: null,allowHalfOpen: false,readable: true,writable: true});
+		con.readable = true;
 		console.log('	conn writable: ' + conn.writable);
 		console.log('	conn readable: ' + conn.readable);
 	}
