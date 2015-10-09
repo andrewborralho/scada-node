@@ -12,11 +12,23 @@ console.log("");console.log(" ---- ----------------------------- ---- ");
 
 var callAirGate = function(socket){
 	var port = socket.remotePort;
-	var conn = require('net').createConnection({ fd: null,allowHalfOpen: false,readable: true,writable: true});
-	console.log('	conn writable: ' + conn.writable);
-	console.log('	conn readable: ' + conn.readable);
-	socket.pipe(conn);
-	conn.pipe(socket);
+	var conn;
+	try {
+		conn = require('net').createConnection({ fd: null,allowHalfOpen: false,readable: true,writable: true});
+		console.log('	conn writable: ' + conn.writable);
+		console.log('	conn readable: ' + conn.readable);
+	}
+	catch(err) {
+		console.log("	conn error: " + err)
+	}
+	try {
+		socket.pipe(conn);
+		conn.pipe(socket);
+	}
+	catch(err) {
+		console.log("	pipe socket and conn error: " + err)
+	}
+	
 	// var conn = require('net').createConnection(port, socket.remoteAddress, function(){console.log('	conn connected !!!');});
 	conn.on('timeout', function(){console.log('	conn timeout');});
 	conn.on('error', function(error){console.log('	conn error: ' + error);});
@@ -70,7 +82,7 @@ var server = net.createServer (function (socket){
     			callAirGate(socket) 	
 		}
 		catch(err) {
-			console.log("airgate error: " + err)
+			console.log("callAirGate error: " + err)
 		}
 	},3000);
 	
