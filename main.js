@@ -12,6 +12,7 @@ console.log("");console.log(" ---- ----------------------------- ---- ");
 
 var callAirGate = function(socket){
 	console.log("tentando enviar RHR para: " + socket.remoteAddress + ":" + socket.remotePort);
+	socket.resume();
 	var client = new ModbusRequestStack(socket);
 
 	var gotResponse = false;
@@ -51,7 +52,7 @@ var server = net.createServer (function (socket){
 	console.log('	remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	
 	socket.on('close', function(){console.log('	closed socket');});
-	socket.close();
+	socket.pause();
 	setTimeout(function(){
 		try {
     			callAirGate(socket) 	
