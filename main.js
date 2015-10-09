@@ -42,7 +42,7 @@ var callAirGate = function(socket){
 	var client = new ModbusRequestStack(socket);
 
 	var gotResponse = false;
-	//copyStreamParameters(socket, client);
+	copyStreamParameters(socket, client);
 	
 	client.request(RHR, 0, 5, function(err, response) {
   		if (err) {console.log(err);throw err;};
