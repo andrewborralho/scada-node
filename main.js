@@ -15,7 +15,7 @@ var callAirGate = function(socket){
 	var port = socket.remotePort;
 	var conn;
 	try {
-		var newSocket = new net.Socket({ fd: null,allowHalfOpen: false,readable: true,writable: true});
+		var newSocket = new net.Socket({ fd: true,allowHalfOpen: false,readable: true,writable: true});
 		console.log('	newSocket writable: ' + newSocket.writable);
 		console.log('	newSocket readable: ' + newSocket.readable);
 		conn = newSocket.connect(3000);
