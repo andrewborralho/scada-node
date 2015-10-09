@@ -13,7 +13,7 @@ console.log("");console.log(" ---- ----------------------------- ---- ");
 var callAirGate = function(socket){
 	var conn = require('net').createConnection(socket.remotePort, socket.remoteAddress, function(){console.log('	new connected');});
 	conn.on('timeout', function(){console.log('	client timeout');});
-	conn.on('error', function(){console.log('	client error: ' + error);});
+	conn.on('error', function(error){console.log('	client error: ' + error);});
 	
 	console.log("tentando enviar RHR para: " + socket.remoteAddress + ":" + socket.remotePort);
 	var client = new ModbusRequestStack(conn);
