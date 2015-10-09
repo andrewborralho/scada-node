@@ -1,4 +1,5 @@
 var net = require('net');
+var netStream = require('net').Stream;
 var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
 var clientModule = require('modbus-stack/client');
 var fs = require('fs');
@@ -7,11 +8,26 @@ var modbus = require('modbus-stack');
 console.log("");
 console.log(" ---- ----------------------------- ---- ");
 
+function printObject(o) {
+  var out = '';
+  for (var p in o) {
+    out += p + ': ' + o[p] + '\n';
+  }
+  alert(out);
+}
+
 
 var callAirGate = function(socket){
 	console.log("tentando enviar mensagem para: " + socket.remoteAddress + ":" + socket.remotePort);
-	socket.destroy();
-	var client = clientModule.createClient(socket.remoteAddress, socket.remotePort);
+	
+	clientModule.createClient = function(stream) {
+  		var s = new Client();
+  		printObject(stream);
+  		printObject(s);
+  		return s;
+	}
+
+	var client = clientModule.createClient(socket);
 	var gotResponse = false;
 	
 	
