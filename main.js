@@ -2,6 +2,7 @@ var net = require('net');
 var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
 var clientModule = require('modbus-stack/client');
 var fs = require('fs');
+var modbus = require('modbus-stack');
 
 console.log("");
 console.log(" ---- ----------------------------- ---- ");
