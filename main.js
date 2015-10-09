@@ -18,6 +18,9 @@ var callAirGate = function(socket){
 	var gotResponse = false;
 	// copyStreamParameters(socket, client);
 	
+	console.log('	client writable: ' + client.writable);
+	console.log('	client connected: ' + client.connected);
+
 	client.on('timeout', function(){console.log('	client timeout');});
 	client.on('error', function(){console.log('	client error: ' + error);});
 
