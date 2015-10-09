@@ -25,7 +25,7 @@ var callAirGate = function(socket){
 	});
 	socket.on('close', function() {
     		assert.ok(gotRequest, "The 'request' event was never fired")
-	}
+	});
 }
 
 
