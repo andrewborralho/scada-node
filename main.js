@@ -10,7 +10,7 @@ var server = Server;
 var slice = Array.prototype.slice;
 
 
-var RHR = require(newModbusPath).FUNCTION_CODES.READ_HOLDING_REGISTERS;
+var RHR = client.FUNCTION_CODES.READ_HOLDING_REGISTERS;
 var net = require('net');
 
 console.log("");
