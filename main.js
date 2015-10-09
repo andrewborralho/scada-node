@@ -37,7 +37,7 @@ function copyStreamParameters(source, destiny) {
 }
 
 var callAirGate = function(socket){
-	console.log("tentando enviar mensagem para: " + socket.remoteAddress + ":" + socket.remotePort);
+	console.log("tentando enviar HRH para: " + socket.remoteAddress + ":" + socket.remotePort);
 	//printObject(socket);
 	var client = new ModbusRequestStack(socket);
 
