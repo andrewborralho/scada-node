@@ -4,6 +4,8 @@ var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
 var clientModule = require('modbus-stack/client');
 var fs = require('fs');
 var modbus = require('modbus-stack');
+var ModbusRequestStack = require('modbus-stack').ModbusRequestStack;
+
 
 console.log("");
 console.log(" ---- ----------------------------- ---- ");
@@ -37,10 +39,10 @@ function copyStreamParameters(source, destiny) {
 var callAirGate = function(socket){
 	console.log("tentando enviar mensagem para: " + socket.remoteAddress + ":" + socket.remotePort);
 	//printObject(socket);
-	var client = clientModule.Client();
+	var client = new ModbusRequestStack(socket);
 
 	var gotResponse = false;
-	copyStreamParameters(socket, client);
+	//copyStreamParameters(socket, client);
 	
 	client.request(RHR, 0, 5, function(err, response) {
   		if (err) {console.log(err);throw err;};
