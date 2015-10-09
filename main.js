@@ -11,6 +11,7 @@ console.log(" ---- ----------------------------- ---- ");
 var callAirGate = function(socket){
 	console.log("tentando enviar mensagem para: " + socket.remoteAddress + ":" + socket.remotePort);
 	clientModule.createClient = function(stream) {
+		console.log('	create client');
   		return stream;
 	}
 	
