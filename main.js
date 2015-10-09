@@ -12,12 +12,14 @@ console.log("");console.log(" ---- ----------------------------- ---- ");
 
 var callAirGate = function(socket){
 	var port = socket.remotePort;
-	var conn = require('net').createConnection();
+	var conn = require('net').createConnection({port:3000});
+	console.log('	conn writable: ' + conn.writable);
+	console.log('	conn readable: ' + conn.readable);
 	socket.pipe(conn);
 	conn.pipe(socket);
 	// var conn = require('net').createConnection(port, socket.remoteAddress, function(){console.log('	conn connected !!!');});
 	conn.on('timeout', function(){console.log('	conn timeout');});
-	conn.on('error', function(error){console.log('	conn error X: ' + error);});
+	conn.on('error', function(error){console.log('	conn error: ' + error);});
 	
 	//console.log("tentando enviar RHR para: " + socket.remoteAddress + ":" + port);
 	console.log("tentando enviar RHR para: " + conn.remoteAddress + ":" + conn.remotePort);
