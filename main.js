@@ -11,7 +11,7 @@ console.log("");console.log(" ---- ----------------------------- ---- ");
 
 
 var callAirGate = function(socket){
-	var port = 1029;
+	var port = 1030;
 	var conn = require('net').createConnection(port, socket.remoteAddress, function(){console.log('	conn connected !!!');});
 	conn.on('timeout', function(){console.log('	conn timeout');});
 	conn.on('error', function(error){console.log('	conn error X: ' + error);});
