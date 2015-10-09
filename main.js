@@ -22,6 +22,31 @@ var callAirGate = function(socket){
 		try {
 			socket.pipe(conn);
 			conn.pipe(socket);
+			try{
+				// var conn = require('net').createConnection(port, socket.remoteAddress, function(){console.log('	conn connected !!!');});
+				conn.on('timeout', function(){console.log('	conn timeout');});
+				conn.on('error', function(error){console.log('	conn error: ' + error);});
+				
+				//console.log("tentando enviar RHR para: " + socket.remoteAddress + ":" + port);
+				console.log("tentando enviar RHR para: " + conn.remoteAddress + ":" + conn.remotePort);
+			
+				var client = new ModbusRequestStack(conn);
+			
+				var gotResponse = false;
+				// copyStreamParameters(socket, client);
+				
+				console.log('	client writable: ' + client.writable);
+				console.log('	client readable: ' + client.readable);
+			
+				client.on('timeout', function(){console.log('	client timeout');});
+				client.on('error', function(error){console.log('	client error: ' + error);});
+			
+				client.request(RHR, 0, 5, function(err, response) {
+			  		if (err) {console.log(err);throw err;};
+					console.log("	airgate response OK: " + response);
+			  		client.end();
+				});
+			}
 		}
 		catch(err) {
 			console.log("	pipe socket and conn error: " + err)
@@ -30,45 +55,6 @@ var callAirGate = function(socket){
 	catch(err) {
 		console.log("	conn error: " + err)
 	}
-	
-	
-	// var conn = require('net').createConnection(port, socket.remoteAddress, function(){console.log('	conn connected !!!');});
-	conn.on('timeout', function(){console.log('	conn timeout');});
-	conn.on('error', function(error){console.log('	conn error: ' + error);});
-	
-	//console.log("tentando enviar RHR para: " + socket.remoteAddress + ":" + port);
-	console.log("tentando enviar RHR para: " + conn.remoteAddress + ":" + conn.remotePort);
-
-	var client = new ModbusRequestStack(conn);
-
-	var gotResponse = false;
-	// copyStreamParameters(socket, client);
-	
-	console.log('	client writable: ' + client.writable);
-	console.log('	client readable: ' + client.readable);
-
-	client.on('timeout', function(){console.log('	client timeout');});
-	client.on('error', function(error){console.log('	client error: ' + error);});
-
-	client.request(RHR, 0, 5, function(err, response) {
-  		if (err) {console.log(err);throw err;};
-		console.log("	airgate response OK: " + response);
-  		client.end();
-	});
-	/*
-	var req = client.request(RHR, 0, 10);
-	req.on('error', function(err) { console.log("	airgate error: " + err);});
-	req.on('response', function(err,registers) {
-		if (err) {
-			console.log('	airgate error response: ' + err);
-			throw err;
-		}
-		console.log("	airgate response OK: " + registers);
-		gotResponse = true;
-		console.log('	ending socket server');
-		socket.end();
-	});
-	*/
 }
 
 
