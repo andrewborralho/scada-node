@@ -19,7 +19,7 @@ var callAirGate = function(socket){
 	// copyStreamParameters(socket, client);
 	
 	console.log('	client writable: ' + client.writable);
-	console.log('	client connected: ' + client.connected);
+	console.log('	client connected: ' + client);
 
 	client.on('timeout', function(){console.log('	client timeout');});
 	client.on('error', function(){console.log('	client error: ' + error);});
@@ -50,6 +50,8 @@ var server = net.createServer (function (socket){
 	console.log("");
 	console.log(" -------- recebeu conexao do airgate -------- ");
 	console.log('	remote address :' + socket.remoteAddress + ":" + socket.remotePort);
+	
+	socket.on('close', function(){console.log('	closed socket');});
 	
 	setTimeout(function(){
 		try {
