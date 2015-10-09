@@ -2,6 +2,7 @@ var Put = require('put');
 var BufferList = require('bufferlist').BufferList;
 var Binary = require('bufferlist/binary').Binary;
 var netStream = require('net').Stream;
+var net = require('net');
 var FUNCTION_CODES = Client.FUNCTION_CODES;
 var StreamStack = require('stream-stack').StreamStack;
 var inherits = require('util').inherits;
