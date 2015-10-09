@@ -1,5 +1,6 @@
+var newModbusPath = '/new-stack/modbus-stack';
 
-var RHR = require('./new-stack/modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
+var RHR = require(newModbusPath).FUNCTION_CODES.READ_HOLDING_REGISTERS;
 var net = require('net');
 
 console.log("");
@@ -9,7 +10,7 @@ console.log(" ---- ----------------------------- ---- ");
 var callAirGate = function(){
 	var port = 1024;
 	console.log("tentando conexao com: " + global.socket.remoteAddress + ":" + port);
-	var client = require('./new-stack/modbus-stack/client').createClient(port, global.socket.remoteAddress);
+	var client = require(newModbusPath).createClient(port, global.socket.remoteAddress);
 	client.on('connect', function(secondSocket){
 		console.log(" -------- segunda conexao com airgate -------- ");
 		console.log('	remote address :' + secondSocket.remoteAddress + ":" + secondSocket.remotePort);
