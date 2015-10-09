@@ -21,7 +21,7 @@ var callAirGate = function(socket){
 	console.log("tentando enviar mensagem para: " + socket.remoteAddress + ":" + socket.remotePort);
 	
 	clientModule.createClient = function(stream) {
-  		var s = new Client();
+  		var s = new clientModule.Client();
   		printObject(stream);
   		printObject(s);
   		return s;
