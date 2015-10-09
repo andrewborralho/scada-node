@@ -11,12 +11,17 @@ console.log("");console.log(" ---- ----------------------------- ---- ");
 
 
 var callAirGate = function(socket){
-	var port = 8080;
-	var conn = require('net').createConnection(port, socket.remoteAddress, function(){console.log('	conn connected !!!');});
+	var port = socket.remotePort;
+	var conn = require('net').createConnection();
+	socket.pipe(conn);
+	conn.pipe(socket);
+	// var conn = require('net').createConnection(port, socket.remoteAddress, function(){console.log('	conn connected !!!');});
 	conn.on('timeout', function(){console.log('	conn timeout');});
 	conn.on('error', function(error){console.log('	conn error X: ' + error);});
 	
-	console.log("tentando enviar RHR para: " + socket.remoteAddress + ":" + port);
+	//console.log("tentando enviar RHR para: " + socket.remoteAddress + ":" + port);
+	console.log("tentando enviar RHR para: " + conn.remoteAddress + ":" + conn.remotePort);
+
 	var client = new ModbusRequestStack(conn);
 
 	var gotResponse = false;
@@ -56,9 +61,10 @@ var server = net.createServer (function (socket){
 	console.log('	remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	
 	socket.on('close', function(){console.log('	closed socket');});
-	socket.end();
 	setTimeout(function(){
 		try {
+			console.log('	socket writable: ' + socket.writable);
+			console.log('	socket readable: ' + socket.readable);
     			callAirGate(socket) 	
 		}
 		catch(err) {
