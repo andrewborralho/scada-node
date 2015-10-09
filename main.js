@@ -20,7 +20,7 @@ var callAirGate = function(socket){
 	}
 	*/
 	
-	client.request(FC.READ_INPUT_REGISTERS, 0, 5, function(err, response) {
+	client.request(RHR, 0, 5, function(err, response) {
   		if (err) {console.log(err);throw err;};
 		console.log("	airgate response OK: " + response);
   		client.end();
