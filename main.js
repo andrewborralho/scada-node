@@ -9,6 +9,7 @@ var client = Client;
 var server = Server;
 var slice = Array.prototype.slice;
 
+
 var RHR = require(newModbusPath).FUNCTION_CODES.READ_HOLDING_REGISTERS;
 var net = require('net');
 
@@ -19,7 +20,7 @@ console.log(" ---- ----------------------------- ---- ");
 var callAirGate = function(){
 	var port = 1024;
 	console.log("tentando conexao com: " + global.socket.remoteAddress + ":" + port);
-	var client = require(clientPath).createClient(port, global.socket.remoteAddress);
+	var client = Client.createClient(port, global.socket.remoteAddress);
 	client.on('connect', function(secondSocket){
 		console.log(" -------- segunda conexao com airgate -------- ");
 		console.log('	remote address :' + secondSocket.remoteAddress + ":" + secondSocket.remotePort);
