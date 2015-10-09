@@ -18,6 +18,9 @@ var callAirGate = function(socket){
 	var gotResponse = false;
 	// copyStreamParameters(socket, client);
 	
+	client.on('timeout'){console.log('	client timeout');}
+	client.on('data'){console.log('	client data !');
+	
 	client.request(RHR, 0, 5, function(err, response) {
   		if (err) {console.log(err);throw err;};
 		console.log("	airgate response OK: " + response);
@@ -37,9 +40,6 @@ var callAirGate = function(socket){
 		socket.end();
 	});
 	*/
-	socket.on('close', function() {
-    		assert.ok(gotResponse, " airgate not send 'response'")
-	});
 }
 
 
@@ -48,10 +48,6 @@ var server = net.createServer (function (socket){
 	console.log(" -------- recebeu conexao do airgate -------- ");
 	console.log('	remote address :' + socket.remoteAddress + ":" + socket.remotePort);
 	
-	socket.on('error', function(err) { console.log("	erro socket: " + err);});
-	socket.on('end', function() { console.log("	end socket");});
- 	socket.on('close', function() { console.log("	close socket");});
-
 	setTimeout(function(){
 		try {
     			callAirGate(socket) 	
