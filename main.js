@@ -20,7 +20,6 @@ var callAirGate = function(socket){
 	
 	client.on('timeout', function(){console.log('	client timeout');});
 	client.on('error', function(){console.log('	client error: ' + error);});
-	client.on('data', function(data){console.log('	client data: ' + data );});
 
 	client.request(RHR, 0, 5, function(err, response) {
   		if (err) {console.log(err);throw err;};
