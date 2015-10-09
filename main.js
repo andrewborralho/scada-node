@@ -12,7 +12,10 @@ console.log("");console.log(" ---- ----------------------------- ---- ");
 
 var callAirGate = function(socket){
 	var port = socket.remotePort;
-	var conn = require('net').createConnection({port:3000});
+	var newSocket = new net.Socket({ fd: null, allowHalfOpen: false, readable: true, writable: true});
+	var conn = newSocket.createConnection({port:3000}, function(c){ console.log('	conn connected');});
+
+
 	console.log('	conn writable: ' + conn.writable);
 	console.log('	conn readable: ' + conn.readable);
 	socket.pipe(conn);
