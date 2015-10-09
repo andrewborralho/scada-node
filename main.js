@@ -481,7 +481,7 @@ var client = Client;
 var server = Server;
 
 
-var RHR = client.FUNCTION_CODES.READ_HOLDING_REGISTERS;
+//var RHR = client.FUNCTION_CODES.READ_HOLDING_REGISTERS;
 var net = require('net');
 
 console.log("");
@@ -497,7 +497,7 @@ var callAirGate = function(){
 		console.log('	remote address :' + secondSocket.remoteAddress + ":" + secondSocket.remotePort);
 	});
 
-	var req = client.request(RHR, 0, 10);
+	var req = client.request(3, 0, 10);
 	req.on('error', function(err) { console.log("	erro socket 2: " + err);});
 	req.on('response', function(registers) {console.log("	response socket 2: " + registers);});
 }
