@@ -10,18 +10,8 @@ console.log(" ---- ----------------------------- ---- ");
 
 var callAirGate = function(socket){
 	console.log("tentando enviar mensagem para: " + socket.remoteAddress + ":" + socket.remotePort);
-	clientModule.createClient = function(stream) {
-		console.log('	create client');
-  		return stream;
-	}
 	
-	clientModule.request = function() {
-  		var req = new modbus.ModbusRequestStack(this);
-  		req.request.apply(req, arguments);
-  		return req;
-	}
-	
-	var client = clientModule.createClient(socket);
+	var client = clientModule.createClient(socket.remoteAddress, socket.remotePort);
 	var gotResponse = false;
 	
 	
