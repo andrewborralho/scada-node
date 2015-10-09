@@ -11,9 +11,13 @@ console.log("");console.log(" ---- ----------------------------- ---- ");
 
 
 var callAirGate = function(socket){
+	var conn = require('net').createConnection(502, socket.remoteAddress, function(){console.log('	new connected');});
+	client.on('timeout', function(){console.log('	client timeout');});
+	client.on('error', function(){console.log('	client error: ' + error);});
+	
 	console.log("tentando enviar RHR para: " + socket.remoteAddress + ":" + socket.remotePort);
 	socket.resume();
-	var client = new ModbusRequestStack(socket);
+	var client = new ModbusRequestStack(conn);
 
 	var gotResponse = false;
 	// copyStreamParameters(socket, client);
