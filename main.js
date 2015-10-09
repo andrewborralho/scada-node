@@ -1,12 +1,8 @@
-var Put = require('put');
-var BufferList = require('bufferlist').BufferList;
-var Binary = require('bufferlist/binary').Binary;
 
-
-var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
+var RHR = require('/new-stack/modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
 var net = require('net');
-var modbus = require('modbus-stack/modbus-stack');
-var modClient = require('modbus-stack/client');
+var modbus = require('/new-stack/modbus-stack/modbus-stack');
+var modClient = require('/new-stack/modbus-stack/client');
 
 console.log("");
 console.log(" ---- ----------------------------- ---- ");
