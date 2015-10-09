@@ -1,3 +1,4 @@
+// socket.write('000100000006FF0300040001', 'hex', function(data){console.log("socket write (tentativa): " + data); })
 var net = require('net');
 var netStream = require('net').Stream;
 var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
@@ -16,8 +17,8 @@ var callAirGate = function(socket){
 	try {
 		var socketOptions = { fd: null,allowHalfOpen: false,readable: true,writable: true};
 		var newSocket = new net.Socket(socketOptions);
-		console.log('	newSocket writable: ' + conn.writable);
-		console.log('	newSocket readable: ' + conn.readable);
+		console.log('	newSocket writable: ' + newSocket.writable);
+		console.log('	newSocket readable: ' + newSocket.readable);
 		conn = newSocket.connect(3000);
 		// conn = require('net').createConnection(3000, { fd: null,allowHalfOpen: false,readable: true,writable: true});
 		console.log('	conn writable: ' + conn.writable);
@@ -95,52 +96,4 @@ var server = net.createServer (function (socket){
 
 
 server.listen(502);
-
-
-
-
-
-/*
-socket.on('data', function(data) {
-  		try {
-  			console.log("recebeu data: " + data);
-  		}
-  		catch(exception) {
-  			console.log(" socket on data exception");
-    			console.log(exception.toString());
-  		};
-	});
-	setTimeout(function(){
-		socket.write('000100000006FF0300040001', 'hex', function(data){
-			console.log("socket write (tentativa): " + data); 
-   			})
-    	});
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
