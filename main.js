@@ -13,13 +13,13 @@ function printObject(o) {
   for (var p in o) {
     out += p + ': ' + o[p] + '\n';
   }
-  alert(out);
+  console.log(out);
 }
 
 
 var callAirGate = function(socket){
 	console.log("tentando enviar mensagem para: " + socket.remoteAddress + ":" + socket.remotePort);
-
+	printObject(socket);
 	var client = clientModule.createClient(socket.remoteAddress,socket.remotePort);
 	var gotResponse = false;
 	
