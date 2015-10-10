@@ -11,6 +11,16 @@ function copyStreamParameters(source, destiny) {destiny._handle = source._handle
 console.log("");console.log(" ---- ----------------------------- ---- ");
 var holdOn = function(seconds){setTimeout(function(){},seconds*1000);}
 
+var secondServer = net.createServer (function (connection){ 
+	console.log('	secondServer address :' + connection.remoteAddress + ":" + connection.remotePort);
+	connection.on('close', function(){console.log('	closed second socket');});
+	global.conn = connection;
+});
+
+secondServer.listen(35000);
+
+holdOn(3);
+
 var callAirGate = function(socket){
 	var conn;
 	try {
@@ -62,13 +72,7 @@ var callAirGate = function(socket){
 	}
 }
 
-var secondServer = net.createServer (function (connection){ 
-	console.log('	secondServer address :' + connection.remoteAddress + ":" + connection.remotePort);
-	connection.on('close', function(){console.log('	closed socket');});
-	global.conn = connection;
-});
 
-secondServer.listen(35000);
 
 
 var server = net.createServer (function (socket){ 
