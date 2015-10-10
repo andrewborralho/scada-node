@@ -85,7 +85,8 @@ var server = net.createServer (function (socket){
 	console.log("");
 	console.log(" -------- recebeu conexao do airgate -------- ");
 	console.log('	remote client address :' + socket.remoteAddress + ":" + socket.remotePort);
-	
+	socket.on('data', function(data){console.log('	data server socket:' + data);});
+
 	socket.on('close', function(){console.log('	closed socket');});
 	setTimeout(function(){
 		try {
