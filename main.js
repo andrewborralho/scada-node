@@ -66,8 +66,7 @@ var server = net.createServer (function (socket){
 		socket.write('000100000006FF0300040001', 'hex', function(data){
 			console.log("	socket write (tentativa): " + data); 
    			})
-    		});
-	}, 5000);
+    		}, 5000);
     	
     	socket.on('data', function (data) {
         	console.log("	recebido on data: " + data);
