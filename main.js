@@ -23,7 +23,7 @@ function putTwoWord16be(first, second) {
 var formatRequest = function(functionCode, start, end){
 	
 	var pdu = putTwoWord16be(start, end);
-	console.log(' start:' start + '\n end:' + end + '\n hex:' + pdu);
+	console.log(' start:' + start + '\n end:' + end + '\n hex:' + pdu);
 	/*
 	var buf = Put()
 		.word16be(this.stream._reqNum)
