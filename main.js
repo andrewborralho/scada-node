@@ -57,24 +57,21 @@ formatRequest(2, 12102, 11120);
 
 
 
-
-
-
+var net = require("net");
 var server = net.createServer (function (socket){ 
-	console.log("");
 	console.log(" -------- recebeu conexao do airgate -------- ");
 	console.log('	remote client address :' + socket.remoteAddress + ":" + socket.remotePort);
-	socket.on('timeout', function(){console.log('	server timeout');});
-	socket.on('error', function(error){console.log('	server error: ' + error);});
-	socket.on('close', function(){console.log('	server closed');});
-	socket.write('000100000006FF0300040001', 'hex', function(data){console.log("	socket write (tentativa): " + data); });
 	
-}, 10000);
-
-
+	socket.on('connect', function () {
+		socket.write('000100000006FF0300040001', 'hex', function(data){console.log("	socket write (tentativa): " + data); });
+    	});
+    	
+    	socket.on('data', function (data) {
+        	console.log("	recebido on data: " + data);
+    	});
+	
+});
 server.listen(502);
-
-
 
 
 
