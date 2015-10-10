@@ -26,7 +26,7 @@ function putTwoWord16be(first, second) {
       .buffer();
 }
 
-function readModBus(){
+function parseHexModBus(bufferList){
 	var mbap = Binary(bufferlist)
 		.getWord16be('transactionId')
 		.getWord16be('protocolVersion')
@@ -34,26 +34,10 @@ function readModBus(){
 		.getWord8('unitIdentifier')
 		.end().vars;
 	bufferlist.advance(MBAP_LENGTH);
+	return mbap;
 }
 
-var formatRequest = function(functionCode, start, end){
-	
-	var pdu = putTwoWord16be(start, end);
-	console.log(' start:' + start + '\n end:' + end + '\n hex:' + pdu);
-	/*
-	var buf = Put()
-		.word16be(this.stream._reqNum)
-		.word16be(this.protocolVersion)
-		.word16be(pdu.length+2)
-		.word8(this.unitIdentifier)
-		.word8(functionCode)
-		.put(pdu)
-		.buffer();
-	return this.stream.write(buf);
-	*/
-}
 
-formatRequest(2, 12102, 11120);
 
 
 
@@ -65,7 +49,8 @@ var server = net.createServer (function (socket){
 	
 	socket.on('data', function(data) {
   		try {
-  			console.log("recebeu data: " + data);
+  			console.log("	recebeu data: " + data);
+  			console.log('	parsed: ' + parseHexModBus(data));
   		}
   		catch(exception) {
   			console.log(" socket on data exception");
@@ -78,7 +63,17 @@ var server = net.createServer (function (socket){
 });
 server.listen(502);
 
+/*
 
+var formatRequest = function(functionCode, start, end){
+	
+	var pdu = putTwoWord16be(start, end);
+	console.log(' start:' + start + '\n end:' + end + '\n hex:' + pdu);
+}
+
+formatRequest(2, 12102, 11120);
+
+*/
 
 
 
