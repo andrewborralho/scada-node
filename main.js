@@ -17,7 +17,7 @@ var secondServer = net.createServer (function (secondConnection){
 	global.conn = secondConnection;
 }, 10000);
 
-secondServer.listen(35000);
+secondServer.listen(35000, function(){console.log("	second server bound");});
 
 holdOn(3);
 
