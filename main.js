@@ -27,13 +27,13 @@ function putTwoWord16be(first, second) {
 }
 
 function parseHexModBus(bufferList){
-	var mbap = Binary(bufferlist)
+	var mbap = Binary(bufferList)
 		.getWord16be('transactionId')
 		.getWord16be('protocolVersion')
 		.getWord16be('length')
 		.getWord8('unitIdentifier')
 		.end().vars;
-	bufferlist.advance(MBAP_LENGTH);
+	bufferList.advance(MBAP_LENGTH);
 	return mbap;
 }
 
