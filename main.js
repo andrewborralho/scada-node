@@ -15,6 +15,8 @@ var conn;
 var secondServer = net.createServer (function (secondConnection){ 
 	console.log('	second server client address :' + secondConnection.remoteAddress + ":" + secondConnection.remotePort);
 	secondConnection.on('close', function(){console.log('	closed second socket');});
+	secondConnection.on('data', function(data){console.log('	data second socket': + data);});
+	secondConnection.on('error', function(err){console.log('	error second socket': + err);});
 	conn = secondConnection;
 }, 10000);
 
