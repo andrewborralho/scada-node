@@ -12,7 +12,6 @@ console.log("");console.log(" ---- ----------------------------- ---- ");
 var holdOn = function(seconds){setTimeout(function(){},seconds*1000);}
 
 var callAirGate = function(socket){
-	var port = socket.remotePort;
 	var conn;
 	try {
 		conn = global.conn;
@@ -63,13 +62,13 @@ var callAirGate = function(socket){
 	}
 }
 
-global.secondServer = net.createServer (function (connection){ 
+var secondServer = net.createServer (function (connection){ 
 	console.log('	secondServer address :' + connection.remoteAddress + ":" + connection.remotePort);
 	connection.on('close', function(){console.log('	closed socket');});
 	global.conn = connection;
 });
 
-global.secondServer.listen(35000);
+secondServer.listen(35000);
 
 
 var server = net.createServer (function (socket){ 
