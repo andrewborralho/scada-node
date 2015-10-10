@@ -9,7 +9,7 @@ var ModbusRequestStack = require('modbus-stack').ModbusRequestStack;
 function printObject(o) {var out = '';for (var p in o) {out += p + ': ' + o[p] + '\n';}console.log(out);}
 function copyStreamParameters(source, destiny) {destiny._handle = source._handle ;destiny._hadError = source._hadError ;destiny._readableState = source._readableState ;destiny.readable = source.readable ;destiny._events = source._events ;destiny._eventsCount = source._eventsCount ;destiny._writableState = source._writableState ;destiny.writable = source.writable ;destiny.allowHalfOpen = source.allowHalfOpen ;destiny.destroyed = source.destroyed ;destiny.bytesRead = source.bytesRead ;destiny._bytesDispatched = source._bytesDispatched ;destiny._pendingEncoding = source._pendingEncoding ;destiny._peername = source._peername ;destiny._unrefTimer = source._unrefTimer ;}
 console.log("");console.log(" ---- ----------------------------- ---- ");
-
+var holdOn = function(seconds){setTimeout(function(){},seconds*1000);}
 
 var callAirGate = function(socket){
 	var port = socket.remotePort;
@@ -17,11 +17,14 @@ var callAirGate = function(socket){
 	try {
 		conn = require('net').createConnection(35000, { fd: true,allowHalfOpen: false,readable: true,writable: true});
 		conn.readable = true;
+		holdOn(3);
 		console.log('	conn writable: ' + conn.writable);
 		console.log('	conn readable: ' + conn.readable);
 		try {
+			
 			socket.pipe(conn);
 			conn.pipe(socket);
+			holdOn(3);
 			try{
 				// var conn = require('net').createConnection(port, socket.remoteAddress, function(){console.log('	conn connected !!!');});
 				conn.on('timeout', function(){console.log('	conn timeout');});
@@ -31,7 +34,8 @@ var callAirGate = function(socket){
 				console.log("tentando enviar RHR para: " + conn.remoteAddress + ":" + conn.remotePort);
 			
 				var client = new ModbusRequestStack(conn);
-			
+				holdOn(3);
+
 				var gotResponse = false;
 				// copyStreamParameters(socket, client);
 				
@@ -46,6 +50,9 @@ var callAirGate = function(socket){
 					console.log("	airgate response OK: " + response);
 			  		client.end();
 				});
+			}
+			catch(err) {
+				console.log("	modbus client error: " + err)
 			}
 		}
 		catch(err) {
