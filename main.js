@@ -73,9 +73,7 @@ var server = net.createServer (function (socket){
   		}
 	});
 	setTimeout(function(){
-		socket.write('000100000006FF0300040001', 'hex', function(data){
-			console.log("socket write (tentativa): " + data); 
-   			})
+		socket.write('000100000006FF0300040001', 'hex');
     	}, 10000);
 });
 server.listen(502);
