@@ -10,11 +10,12 @@ function printObject(o) {var out = '';for (var p in o) {out += p + ': ' + o[p] +
 function copyStreamParameters(source, destiny) {destiny._handle = source._handle ;destiny._hadError = source._hadError ;destiny._readableState = source._readableState ;destiny.readable = source.readable ;destiny._events = source._events ;destiny._eventsCount = source._eventsCount ;destiny._writableState = source._writableState ;destiny.writable = source.writable ;destiny.allowHalfOpen = source.allowHalfOpen ;destiny.destroyed = source.destroyed ;destiny.bytesRead = source.bytesRead ;destiny._bytesDispatched = source._bytesDispatched ;destiny._pendingEncoding = source._pendingEncoding ;destiny._peername = source._peername ;destiny._unrefTimer = source._unrefTimer ;}
 console.log("");console.log(" ---- ----------------------------- ---- ");
 var holdOn = function(seconds){setTimeout(function(){},seconds*1000);}
+var conn;
 
 var secondServer = net.createServer (function (secondConnection){ 
 	console.log('	second server address :' + secondConnection.remoteAddress + ":" + secondConnection.remotePort);
 	secondConnection.on('close', function(){console.log('	closed second socket');});
-	global.conn = secondConnection;
+	conn = secondConnection;
 }, 10000);
 
 secondServer.listen(35000, function(){console.log("	second server bound");});
@@ -22,9 +23,7 @@ secondServer.listen(35000, function(){console.log("	second server bound");});
 holdOn(3);
 
 var callAirGate = function(socket){
-	var conn;
 	try {
-		conn = global.conn;
 		holdOn(3);
 		console.log('	conn writable: ' + conn.writable);
 		console.log('	conn readable: ' + conn.readable);
