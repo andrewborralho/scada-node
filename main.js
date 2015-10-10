@@ -50,7 +50,8 @@ var server = net.createServer (function (socket){
 	socket.on('data', function(data) {
   		try {
   			console.log("	recebeu data: " + data);
-  			console.log('	parsed: ' + parseHexModBus(data));
+
+  			console.log("	data on hex: " + data.toString('hex'));
   		}
   		catch(exception) {
   			console.log(" socket on data exception");
