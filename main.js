@@ -1,7 +1,13 @@
 // socket.write('000100000006FF0300040001', 'hex', function(data){console.log("socket write (tentativa): " + data); })
+const MBAP_LENGTH = 7;
 var net = require('net');
-var Put = require('put');
+
 var netStream = require('net').Stream;
+
+var Put = require('put');
+var BufferList = require('bufferlist').BufferList;
+var Binary = require('bufferlist/binary').Binary;
+
 var RHR = require('modbus-stack').FUNCTION_CODES.READ_HOLDING_REGISTERS;
 var clientModule = require('modbus-stack/client');
 var fs = require('fs');
@@ -18,6 +24,16 @@ function putTwoWord16be(first, second) {
       .word16be(first)
       .word16be(second)
       .buffer();
+}
+
+function readModBus(){
+	var mbap = Binary(bufferlist)
+		.getWord16be('transactionId')
+		.getWord16be('protocolVersion')
+		.getWord16be('length')
+		.getWord8('unitIdentifier')
+		.end().vars;
+	bufferlist.advance(MBAP_LENGTH);
 }
 
 var formatRequest = function(functionCode, start, end){
@@ -48,20 +64,10 @@ var server = net.createServer (function (socket){
 	console.log("");
 	console.log(" -------- recebeu conexao do airgate -------- ");
 	console.log('	remote client address :' + socket.remoteAddress + ":" + socket.remotePort);
-	socket.pipe(socket);
 	socket.on('timeout', function(){console.log('	server timeout');});
 	socket.on('error', function(error){console.log('	server error: ' + error);});
 	socket.on('close', function(){console.log('	server closed');});
-	setTimeout(function(){
-		try {
-			console.log('	server writable: ' + socket.writable);
-			console.log('	server readable: ' + socket.readable);
-    			callAirGate(socket) 	
-		}
-		catch(err) {
-			console.log("callAirGate error: " + err)
-		}
-	},3000);
+	socket.write('000100000006FF0300040001', 'hex', function(data){console.log("	socket write (tentativa): " + data); });
 	
 }, 10000);
 
