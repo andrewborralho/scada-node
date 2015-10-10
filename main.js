@@ -12,69 +12,44 @@ console.log("");console.log(" ---- ----------------------------- ---- ");
 var holdOn = function(seconds){setTimeout(function(){},seconds*1000);}
 var conn;
 
-var secondServer = net.createServer (function (secondConnection){ 
-	console.log('	second server client address :' + secondConnection.remoteAddress + ":" + secondConnection.remotePort);
-	secondConnection.on('close', function(){console.log('	closed second socket');});
-	secondConnection.on('data', function(data){console.log('	data second socket: ' + data);});
-	secondConnection.on('error', function(err){console.log('	error second socket: ' + err);});
-	conn = secondConnection;
-}, 10000);
-
-secondServer.listen(35000, function(){console.log("	second server bound");});
-
-holdOn(3);
-
-var clientToActivateSecondServer = net.connect({port: 35000},
-    function(c) { //'connect' listener
-  	console.log('	second client connected to server!');
-});
-
 var callAirGate = function(socket){
 	try {
-		holdOn(3);
-		//console.log('	conn writable: ' + conn.writable);
-		//console.log('	conn readable: ' + conn.readable);
-		try {
+		
+		//socket.pipe(conn);
+		//conn.pipe(socket);
+		//holdOn(3); 
+		try{
+			// var conn = require('net').createConnection(port, socket.remoteAddress, function(){console.log('	conn connected !!!');});
+			//conn.on('timeout', function(){console.log('	conn timeout');});
+			//conn.on('error', function(error){console.log('	conn error: ' + error);});
 			
-			//socket.pipe(conn);
-			//conn.pipe(socket);
-			//holdOn(3); 
-			try{
-				// var conn = require('net').createConnection(port, socket.remoteAddress, function(){console.log('	conn connected !!!');});
-				//conn.on('timeout', function(){console.log('	conn timeout');});
-				//conn.on('error', function(error){console.log('	conn error: ' + error);});
-				
-				console.log("tentando enviar RHR para: " + socket.remoteAddress + ":" + port);
-				//console.log("tentando enviar RHR para: " + conn.remoteAddress + ":" + conn.remotePort);
-			
-				var client = new ModbusRequestStack(socket);
-				holdOn(3);
+			console.log("tentando enviar RHR para: " + socket.remoteAddress + ":" + socket.remotePort);
+			//console.log("tentando enviar RHR para: " + conn.remoteAddress + ":" + conn.remotePort);
+		
+			var client = new ModbusRequestStack(socket);
+			holdOn(3);
 
-				var gotResponse = false;
-				// copyStreamParameters(socket, client);
-				
-				console.log('	client writable: ' + client.writable);
-				console.log('	client readable: ' + client.readable);
+			var gotResponse = false;
+			// copyStreamParameters(socket, client);
 			
-				client.on('timeout', function(){console.log('	client timeout');});
-				client.on('error', function(error){console.log('	client error: ' + error);});
-			
-				client.request(RHR, 0, 5, function(err, response) {
-			  		if (err) {console.log(err);throw err;};
-					console.log("	airgate response OK: " + response);
-			  		client.end();
-				});
-			}
-			catch(err) {
-				console.log("	modbus client error: " + err)
-			}
+			console.log('	client writable: ' + client.writable);
+			console.log('	client readable: ' + client.readable);
+		
+			client.on('timeout', function(){console.log('	client timeout');});
+			client.on('error', function(error){console.log('	client error: ' + error);});
+		
+			client.request(RHR, 0, 5, function(err, response) {
+		  		if (err) {console.log(err);throw err;};
+				console.log("	airgate response OK: " + response);
+		  		client.end();
+			});
 		}
 		catch(err) {
-			console.log("	pipe socket and conn error: " + err)
+			console.log("	modbus client error: " + err)
 		}
 	}
 	catch(err) {
-		console.log("	conn error: " + err)
+		console.log("	pipe socket and conn error: " + err)
 	}
 }
 
