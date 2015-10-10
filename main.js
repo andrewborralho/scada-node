@@ -13,7 +13,7 @@ var holdOn = function(seconds){setTimeout(function(){},seconds*1000);}
 var conn;
 
 var secondServer = net.createServer (function (secondConnection){ 
-	console.log('	second server address :' + secondConnection.remoteAddress + ":" + secondConnection.remotePort);
+	console.log('	second server client address :' + secondConnection.remoteAddress + ":" + secondConnection.remotePort);
 	secondConnection.on('close', function(){console.log('	closed second socket');});
 	conn = secondConnection;
 }, 10000);
@@ -21,6 +21,11 @@ var secondServer = net.createServer (function (secondConnection){
 secondServer.listen(35000, function(){console.log("	second server bound");});
 
 holdOn(3);
+
+var clientToActivateSecondServer = net.connect({port: 35000},
+    function(c) { //'connect' listener
+  	console.log('	second client connected to server!');
+});
 
 var callAirGate = function(socket){
 	try {
@@ -77,7 +82,7 @@ var callAirGate = function(socket){
 var server = net.createServer (function (socket){ 
 	console.log("");
 	console.log(" -------- recebeu conexao do airgate -------- ");
-	console.log('	remote address :' + socket.remoteAddress + ":" + socket.remotePort);
+	console.log('	remote client address :' + socket.remoteAddress + ":" + socket.remotePort);
 	
 	socket.on('close', function(){console.log('	closed socket');});
 	setTimeout(function(){
