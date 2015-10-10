@@ -15,7 +15,7 @@ var callAirGate = function(socket){
 	var port = socket.remotePort;
 	var conn;
 	try {
-		conn = global.connection;
+		conn = global.conn;
 		holdOn(3);
 		console.log('	conn writable: ' + conn.writable);
 		console.log('	conn readable: ' + conn.readable);
