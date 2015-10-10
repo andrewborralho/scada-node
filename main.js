@@ -15,8 +15,7 @@ var callAirGate = function(socket){
 	var port = socket.remotePort;
 	var conn;
 	try {
-		conn = require('net').createConnection(35000, { fd: true,allowHalfOpen: false,readable: true,writable: true});
-		conn.readable = true;
+		conn = global.connection;
 		holdOn(3);
 		console.log('	conn writable: ' + conn.writable);
 		console.log('	conn readable: ' + conn.readable);
@@ -64,6 +63,14 @@ var callAirGate = function(socket){
 	}
 }
 
+global.secondServer = net.createServer (function (connection){ 
+	console.log('	secondServer address :' + connection.remoteAddress + ":" + connection.remotePort);
+	connection.on('close', function(){console.log('	closed socket');});
+	global.conn = connection;
+});
+
+global.secondServer.listen(35000);
+
 
 var server = net.createServer (function (socket){ 
 	console.log("");
@@ -86,6 +93,9 @@ var server = net.createServer (function (socket){
 
 
 server.listen(502);
+
+
+
 
 
 
