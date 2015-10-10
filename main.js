@@ -16,7 +16,12 @@ var callAirGate = function(socket){
 	try{
 		console.log("tentando enviar RHR para: " + socket.remoteAddress + ":" + socket.remotePort);
 
-		var client = new ModbusRequestStack(socket);
+		var newStream = new require('stream').Duplex();
+		
+		newStream.pipe(socket);
+		socket.pipe(newStream);
+		
+		var client = new ModbusRequestStack(newStream);
 		holdOn(3);
 		var gotResponse = false;
 		console.log('	client writable: ' + client.writable);
