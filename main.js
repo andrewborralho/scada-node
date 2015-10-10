@@ -62,16 +62,21 @@ var server = net.createServer (function (socket){
 	console.log(" -------- recebeu conexao do airgate -------- ");
 	console.log('	remote client address :' + socket.remoteAddress + ":" + socket.remotePort);
 	
+	
+	socket.on('data', function(data) {
+  		try {
+  			console.log("recebeu data: " + data);
+  		}
+  		catch(exception) {
+  			console.log(" socket on data exception");
+    			console.log(exception.toString());
+  		}
+	});
 	setTimeout(function(){
 		socket.write('000100000006FF0300040001', 'hex', function(data){
-			console.log("	socket write (tentativa): " + data); 
+			console.log("socket write (tentativa): " + data); 
    			})
-    		}, 5000);
-    	
-    	socket.on('data', function (data) {
-        	console.log("	recebido on data: " + data);
-    	});
-	
+    	}, 10000);
 });
 server.listen(502);
 
