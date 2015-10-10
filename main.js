@@ -32,22 +32,22 @@ var clientToActivateSecondServer = net.connect({port: 35000},
 var callAirGate = function(socket){
 	try {
 		holdOn(3);
-		console.log('	conn writable: ' + conn.writable);
-		console.log('	conn readable: ' + conn.readable);
+		//console.log('	conn writable: ' + conn.writable);
+		//console.log('	conn readable: ' + conn.readable);
 		try {
 			
-			socket.pipe(conn);
-			conn.pipe(socket);
-			holdOn(3); 
+			//socket.pipe(conn);
+			//conn.pipe(socket);
+			//holdOn(3); 
 			try{
 				// var conn = require('net').createConnection(port, socket.remoteAddress, function(){console.log('	conn connected !!!');});
-				conn.on('timeout', function(){console.log('	conn timeout');});
-				conn.on('error', function(error){console.log('	conn error: ' + error);});
+				//conn.on('timeout', function(){console.log('	conn timeout');});
+				//conn.on('error', function(error){console.log('	conn error: ' + error);});
 				
-				//console.log("tentando enviar RHR para: " + socket.remoteAddress + ":" + port);
-				console.log("tentando enviar RHR para: " + conn.remoteAddress + ":" + conn.remotePort);
+				console.log("tentando enviar RHR para: " + socket.remoteAddress + ":" + port);
+				//console.log("tentando enviar RHR para: " + conn.remoteAddress + ":" + conn.remotePort);
 			
-				var client = new ModbusRequestStack(conn);
+				var client = new ModbusRequestStack(socket);
 				holdOn(3);
 
 				var gotResponse = false;
@@ -85,13 +85,14 @@ var server = net.createServer (function (socket){
 	console.log("");
 	console.log(" -------- recebeu conexao do airgate -------- ");
 	console.log('	remote client address :' + socket.remoteAddress + ":" + socket.remotePort);
-	socket.on('data', function(data){console.log('	data server socket:' + data);});
-
-	socket.on('close', function(){console.log('	closed socket');});
+	socket.on('data', function(data){console.log('	server data:' + data);});
+	socket.on('timeout', function(){console.log('	server timeout');});
+	socket.on('error', function(error){console.log('	server error: ' + error);});
+	socket.on('close', function(){console.log('	server closed');});
 	setTimeout(function(){
 		try {
-			console.log('	socket writable: ' + socket.writable);
-			console.log('	socket readable: ' + socket.readable);
+			console.log('	server writable: ' + socket.writable);
+			console.log('	server readable: ' + socket.readable);
     			callAirGate(socket) 	
 		}
 		catch(err) {
