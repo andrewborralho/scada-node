@@ -21,7 +21,7 @@ var onHttpRequest = function(request, response) {
 	console.log("    requested from " + request.connection.remoteAddress);
     response.writeHead(200, {"Content-Type": "text/html"}); // HTML??
     if (request.url == "/") {
-    	var html = fillDataOnHtml(['2', '3']]);
+    	var html = fillDataOnHtml(['2', '3']);
     	response.write(html);
     	response.end();
     }
