@@ -23,9 +23,9 @@ var clearDbEntries = function(){
 	db.run("CREATE TABLE modhistory (unitid, value);");
 }
 
-// db.run("CREATE TABLE modhistory (unitid, value);");
+db.run("CREATE TABLE modhistory (unitid, value);");
 
-clearDbEntries();
+// clearDbEntries();
 saveResultOnDb(1111);
 saveResultOnDb(2222);
 saveResultOnDb(3333);
