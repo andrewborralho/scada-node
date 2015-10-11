@@ -21,7 +21,7 @@ var queryDb = function(){
     		resValues.push(resArray[i+1]);
 	}
 	console.log("res: " + res.toString());
-	console.log("resarray: " + resArray.toString());
+	console.log("resarray: " + resArray[0]);
 	console.log("resvaluees: " + resValues.toString());
 	return resValues;
 }
