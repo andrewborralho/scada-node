@@ -28,13 +28,8 @@ console.log("[0].values " + res[0].values);
 console.log('agora apaga tudo');
 db.run("DELETE FROM modhistory");
 
-console.log('nao eh pra vir nada');
-var res = db.exec("SELECT * FROM modhistory");
-console.log("[0].columns " + res[0].columns);
-console.log("[0].values " + res[0].values);
-
 console.log('reinsere');
-db.run("INSERT INTO modhistory VALUES (?,?), (?,?)", [1,3000,2,6000]);
+db.run("INSERT INTO modhistory VALUES (?,?), (?,?)", [1,3333,2,6666]);
 
 console.log('ve valores inseridos');
 var res = db.exec("SELECT * FROM modhistory");
