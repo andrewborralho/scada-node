@@ -15,13 +15,15 @@ var saveResultOnDb = function(data){
 
 var queryDb = function(){
 	var res = db.exec("SELECT * FROM modhistory;");
-	resArray = res.toString().split(",");
+	console.log("[0].columns " + res[0].columns);
+	console.log("[0].values " + res[0].values);
+	resArray = res[0].values;
 	resValues = [];
 	for (i = 0; i < resArray.length - 1; i = i + 2) {
     		resValues.push(resArray[i+1]);
 	}
 	console.log("res: " + res.toString());
-	console.log("resarray: " + resArray[0]);
+	console.log("resarray: " + resArray.toString());
 	console.log("resvaluees: " + resValues.toString());
 	return resValues;
 }
