@@ -1,44 +1,34 @@
-/*
-todo: 
-- implementar reconnect no caso timeout
-- organizar pipeline do procedimento
-- criar webserver
-- display da info no html do webserver
-- display do grafico
-- salvar info
-*/
+//db.run("CREATE TABLE modhistory (unitid, value);");
+
 var net = require('net');
 var http = require("http");
 var fs = require('fs');
 var SQL = require('sql.js');
+const POOLING_INTERVAL = 10000;
 
 var filebuffer = fs.readFileSync('db.sqlite');
 var db = new SQL.Database(filebuffer);
 
-console.log('criando table');
-db.run("CREATE TABLE modhistory (unitid, value);");
-db.run("INSERT INTO modhistory VALUES (?,?), (?,?);", [1,3000,2,6000]);
 
-console.log('ve valores inseridos');
-var res = db.exec("SELECT * FROM modhistory;");
-console.log("[0].columns " + res[0].columns);
-console.log("[0].values " + res[0].values);
+var saveResultOnDb = function(data){
+	db.run("INSERT INTO modhistory VALUES (?,?)", [1,data]);
+}
 
+var queryDb = function(){
+	var res = db.exec("SELECT * FROM modhistory;");
+	console.log("[0].columns " + res[0].columns);
+	console.log("[0].values " + res[0].values);
+}
 
-console.log('agora apaga tudo');
-db.run("DELETE FROM modhistory");
+var clearDbEntries = function(){
+	db.run("DELETE FROM modhistory");
+}
 
-console.log('reinsere');
-db.run("INSERT INTO modhistory VALUES (?,?), (?,?)", [1,3333,2,6666]);
-
-console.log('ve valores inseridos');
-var res = db.exec("SELECT * FROM modhistory");
-console.log("[0].columns " + res[0].columns);
-console.log("[0].values " + res[0].values);
-
-// var data = db.export();
-// var buffer = new Buffer(data);
-// fs.writeFileSync("db.sqlite", buffer);
+clearDbEntries();
+saveResultOnDb(1111);
+saveResultOnDb(2222);
+saveResultOnDb(3333);
+queryDb();
 
     
 
@@ -90,6 +80,6 @@ var modbusServer = net.createServer (function (socket){
 	
 	setInterval(function(){
 		socket.write('000100000006FF0300040001', 'hex');
-    	}, 5000);
+    	}, POOLING_INTERVAL);
 });
 modbusServer.listen(502, function(){console.log("\n --------------- modbus server listening --------------- ");});
