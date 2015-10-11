@@ -19,7 +19,7 @@ var modbusServer = net.createServer (function (socket){
 		socket.write('000100000006FF0300040001', 'hex');
     	}, 5000);
 });
-modbusServer.listen(502, function(){console.log(" ----------- modbus server listening ----------- ");});
+modbusServer.listen(502, function(){console.log("\n ----------- modbus server listening ----------- ");});
 
 /*
 
