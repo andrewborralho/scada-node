@@ -9,10 +9,16 @@ todo:
 */
 var net = require('net');
 
+var getRegisterValue = function(hexString){
+	return hexString.substr(16,hexString.length);
+}
+
 var modbusServer = net.createServer (function (socket){ 
 	console.log(" ------- recebeu conexão de " + socket.remoteAddress + ":" + socket.remotePort);
 	socket.on('data', function(data) {
-  			console.log(" --- data on hex: " + data.toString('hex'));
+			data = data.toString('hex');
+  			console.log(" --- data on hex: " + data);
+  			console.log(" --- register value: " + getRegisterValue(data));
 	});
 	
 	setInterval(function(){
