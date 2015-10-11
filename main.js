@@ -14,7 +14,7 @@ var SQL = require('sql.js');
 
 var filebuffer = fs.readFileSync('db.sqlite');
 var db = new SQL.Database(filebuffer);
-
+/*
 console.log('criando table');
 db.run("CREATE TABLE modhistory (unitid, value);");
 db.run("INSERT INTO modhistory VALUES (?,?), (?,?);", [1,3000,2,6000]);
@@ -24,8 +24,9 @@ var res = db.exec("SELECT * FROM modhistory;");
 console.log("[0].columns " + res[0].columns);
 console.log("[0].values " + res[0].values);
 
+*/
 console.log('agora apaga tudo');
-db.run("DELETE * FROM modhistory;");
+db.run("DELETE FROM modhistory;");
 
 console.log('nao eh pra vir nada');
 var res = db.exec("SELECT * FROM modhistory;");
