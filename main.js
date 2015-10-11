@@ -14,8 +14,10 @@ var saveResultOnDb = function(data){
 
 var queryDb = function(){
 	var res = db.exec("SELECT * FROM modhistory;");
-	console.log("[0].columns " + res[0].columns);
-	console.log("[0].values " + res[0].values);
+	if(res){
+		console.log("[0].columns " + res[0].columns);
+		console.log("[0].values " + res[0].values);
+	} else { console.log(' nao veio nada ');}
 }
 
 var clearDbEntries = function(){
@@ -23,12 +25,12 @@ var clearDbEntries = function(){
 	db.run("CREATE TABLE modhistory (unitid, value);");
 }
 
-db.run("CREATE TABLE modhistory (unitid, value);");
+//db.run("CREATE TABLE modhistory (unitid, value);");
 
 // clearDbEntries();
-saveResultOnDb(1111);
-saveResultOnDb(2222);
-saveResultOnDb(3333);
+//saveResultOnDb(1111);
+//saveResultOnDb(2222);
+//saveResultOnDb(3333);
 queryDb();
 db.close()
 
