@@ -14,13 +14,31 @@ var SQL = require('sql.js');
 
 var filebuffer = fs.readFileSync('db.sqlite');
 var db = new SQL.Database(filebuffer);
-var res = db.exec("SELECT * FROM test");
+
+console.log('criando table');
+db.run("CREATE TABLE modhistory (unitid, value);");
+db.run("INSERT INTO modhistory VALUES (?,?), (?,?);", [1,3000,2,6000]);
+
+console.log('ve valores inseridos');
+var res = db.exec("SELECT * FROM modhistory;");
 console.log("[0].columns " + res[0].columns);
 console.log("[0].values " + res[0].values);
-// [{columns:['col1','col2',...], values:[[first row], [second row], ...]}]
 
-// db.run("CREATE TABLE test (col1, col2);");
-// db.run("INSERT INTO test VALUES (?,?), (?,?)", [1,111,2,222]);
+console.log('agora apaga tudo');
+db.run("DELETE * FROM modhistory;");
+
+console.log('nao eh pra vir nada');
+var res = db.exec("SELECT * FROM modhistory;");
+console.log("[0].columns " + res[0].columns);
+console.log("[0].values " + res[0].values);
+
+console.log('reinsere');
+db.run("INSERT INTO modhistory VALUES (?,?), (?,?);", [1,3000,2,6000]);
+
+console.log('ve valores inseridos');
+var res = db.exec("SELECT * FROM modhistory;");
+console.log("[0].columns " + res[0].columns);
+console.log("[0].values " + res[0].values);
 
 // var data = db.export();
 // var buffer = new Buffer(data);
