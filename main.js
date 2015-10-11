@@ -10,7 +10,7 @@ todo:
 var net = require('net');
 
 var getRegisterValue = function(hexString){
-	return hexString.substr(17,hexString.length);
+	return hexString.substr(18,hexString.length);
 }
 
 var modbusServer = net.createServer (function (socket){ 
