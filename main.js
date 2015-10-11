@@ -15,7 +15,7 @@ var saveResultOnDb = function(data){
 
 var queryDb = function(){
 	var res = db.exec("SELECT * FROM modhistory;");
-	resArray = res.split(",");
+	resArray = res.toString().split(",");
 	resValues = [];
 	for (i = 0; i < resArray.length - 1; i = i + 2) {
     		resValues.push(resArray(i+1));
