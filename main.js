@@ -17,7 +17,7 @@ var modbusServer = net.createServer (function (socket){
 	console.log(" ------- recebeu conexão de " + socket.remoteAddress + ":" + socket.remotePort);
 	socket.on('data', function(data) {
 			data = data.toString('hex');
-  			console.log(" --- data on hex: " + data);
+  			// console.log(" --- data on hex: " + data);
   			console.log(" --- register value: " + getRegisterValue(data));
 	});
 	
