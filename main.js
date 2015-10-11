@@ -14,13 +14,15 @@ var SQL = require('sql.js');
 
 var filebuffer = fs.readFileSync('db.sqlite');
 var db = new SQL.Database(filebuffer);
+var res = db.exec("SELECT * FROM test");
+console.log("db query: " + res);
 
-db.run("CREATE TABLE test (col1, col2);");
-db.run("INSERT INTO test VALUES (?,?), (?,?)", [1,111,2,222]);
+// db.run("CREATE TABLE test (col1, col2);");
+// db.run("INSERT INTO test VALUES (?,?), (?,?)", [1,111,2,222]);
 
-var data = db.export();
-var buffer = new Buffer(data);
-fs.writeFileSync("db.sqlite", buffer);
+// var data = db.export();
+// var buffer = new Buffer(data);
+// fs.writeFileSync("db.sqlite", buffer);
 
     
 
