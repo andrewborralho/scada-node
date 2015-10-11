@@ -6,6 +6,7 @@ const POOLING_INTERVAL = 10000;
 
 var filebuffer = fs.readFileSync('db.sqlite');
 var db = new SQL.Database(filebuffer);
+db.run("CREATE TABLE modhistory (unitid, value);");
 
 
 var saveResultOnDb = function(data){
@@ -14,25 +15,16 @@ var saveResultOnDb = function(data){
 
 var queryDb = function(){
 	var res = db.exec("SELECT * FROM modhistory;");
-	if(res){
-		console.log("[0].columns " + res[0].columns);
-		console.log("[0].values " + res[0].values);
-	} else { console.log(' nao veio nada ');}
+	res = "1,1111,1,2222,1,3333";
+	resArray = res.split(",");
+	resValues = [];
+	for (i = 0; i < resArray.length - 1; i = i + 2) {
+    		resValues.push(resArray(i+1));
+	}
+	console.log(resValues);
+	return resValues;
 }
 
-var clearDbEntries = function(){
-	db.run("DROP TABLE modhistory");
-	db.run("CREATE TABLE modhistory (unitid, value);");
-}
-
-//db.run("CREATE TABLE modhistory (unitid, value);");
-
-// clearDbEntries();
-//saveResultOnDb(1111);
-//saveResultOnDb(2222);
-//saveResultOnDb(3333);
-queryDb();
-db.close()
 
     
 
