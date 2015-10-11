@@ -12,7 +12,7 @@ var http = require("http");
 
 
 var fs = require("fs");
-var file = process.env.CLOUD_DIR + "/" + "test.db";
+var file = "test.db";
 var exists = fs.existsSync(file);
 
 if(!exists) {
