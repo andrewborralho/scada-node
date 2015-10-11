@@ -1,5 +1,3 @@
-//db.run("CREATE TABLE modhistory (unitid, value);");
-
 var net = require('net');
 var http = require("http");
 var fs = require('fs');
@@ -22,6 +20,7 @@ var queryDb = function(){
 
 var clearDbEntries = function(){
 	db.run("DELETE FROM modhistory");
+	db.run("CREATE TABLE modhistory (unitid, value);");
 }
 
 clearDbEntries();
