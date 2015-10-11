@@ -8,6 +8,40 @@ todo:
 - salvar info
 */
 var net = require('net');
+var http = require("http");
+
+var fillDataOnHtml = function(formattedData){
+	airGateData = "<p> Valor:" + formattedData[0] + " Identificador: " + formattedData[1] + "</p>"; 
+	var html = "<html><body><h1> Dado do AirGate </h1><br>" + airGateData + "</body></html>";
+	return html;
+};
+
+
+var onHttpRequest = function(request, response) {
+	console.log("    requested from " + request.connection.remoteAddress);
+    response.writeHead(200, {"Content-Type": "text/html"}); // HTML??
+    if (request.url == "/") {
+    	var html = fillDataOnHtml(['2', '3']]);
+    	response.write(html);
+    	response.end();
+    }
+    else if(request.url != "/") {
+        response.write("<h1>Pagina principal em ~/</h1>");
+        response.end();
+    }
+}
+
+var onServerStart = function() {
+	require('dns').lookup(require('os').hostname(), function (err, add, fam) {
+  	console.log('\n --------------- web server bound: ' + add);
+	});
+};
+
+var webServer = http.createServer(onHttpRequest);
+webServer.listen(3000, onServerStart);
+
+
+
 
 var getRegisterValue = function(hexString){
 	return parseInt("0x" + hexString.substr(18,hexString.length));
