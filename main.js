@@ -10,7 +10,7 @@ todo:
 var net = require('net');
 
 var modbusServer = net.createServer (function (socket){ 
-	console.log(" ----------- recebeu conexão de " + socket.remoteAddress + ":" + socket.remotePort);
+	console.log(" - recebeu conexão de " + socket.remoteAddress + ":" + socket.remotePort);
 	socket.on('data', function(data) {
   			console.log(" - data on hex: " + data.toString('hex'));
 	});
