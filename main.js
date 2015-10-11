@@ -6,25 +6,20 @@ const POOLING_INTERVAL = 10000;
 
 var filebuffer = fs.readFileSync('db.sqlite');
 var db = new SQL.Database(filebuffer);
-db.run("CREATE TABLE modhistory (unitid, value);");
+db.run("CREATE TABLE modhistory (value);");
 
 
 var saveResultOnDb = function(data){
-	db.run("INSERT INTO modhistory VALUES (?,?)", [1,data]);
+	db.run("INSERT INTO modhistory VALUES (?)", [data]);
 }
 
 var queryDb = function(){
 	var res = db.exec("SELECT * FROM modhistory;");
 	resArray = res[0].values; // 1,1111,1,2222,1,3333,1,4444
-	resValues = [];
-	for (i = 0; i < resArray.length - 1; i = i + 2) {
-    		resValues.push(resArray[i+1]);
-    		console.log("i:" + i);
-	}
+	
 	console.log("res: " + res.toString());
 	console.log("resarray: " + resArray.toString());
-	console.log("resvaluees: " + resValues.toString()); // 1,2222,1,4444
-	return resValues;
+	return resArray;
 }
 
 saveResultOnDb(1111);
