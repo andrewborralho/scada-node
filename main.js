@@ -19,11 +19,11 @@ var queryDb = function(){
 }
 
 var clearDbEntries = function(){
-	db.run("DELETE FROM modhistory");
+	db.run("DROP TABLE modhistory");
 	db.run("CREATE TABLE modhistory (unitid, value);");
 }
 
-db.run("CREATE TABLE modhistory (unitid, value);");
+// db.run("CREATE TABLE modhistory (unitid, value);");
 
 clearDbEntries();
 saveResultOnDb(1111);
