@@ -18,11 +18,11 @@ var queryDb = function(){
 	resArray = res.toString().split(",");
 	resValues = [];
 	for (i = 0; i < resArray.length - 1; i = i + 2) {
-    		resValues.push(resArray(i+1));
+    		resValues.push(resArray[i+1]);
 	}
-	console.log("res: " + res);
-	console.log("resarray: " + resArray);
-	console.log("resvaluees: " + resValues);
+	console.log("res: " + res.toString());
+	console.log("resarray: " + resArray.toString());
+	console.log("resvaluees: " + resValues.toString());
 	return resValues;
 }
 
