@@ -9,40 +9,20 @@ todo:
 */
 var net = require('net');
 var http = require("http");
+var fs = require('fs');
+var SQL = require('sql.js');
 
+var filebuffer = fs.readFileSync('db.sqlite');
+var db = new SQL.Database(filebuffer);
 
-var fs = require("fs");
-var file = "test.db";
-var exists = fs.existsSync(file);
+db.run("CREATE TABLE test (col1, col2);");
+db.run("INSERT INTO test VALUES (?,?), (?,?)", [1,111,2,222]);
 
-if(!exists) {
-  console.log("Creating DB file.");
-  fs.openSync(file, "w");
-}
+var data = db.export();
+var buffer = new Buffer(data);
+fs.writeFileSync("db.sqlite", buffer);
 
-var sqlite3 = require("sqlite3").verbose();
-var db = new sqlite3.Database(file);
-
-db.serialize(function() {
-	if(!exists) {
-		db.run("CREATE TABLE Stuff (thing TEXT)");
-	}
-	
-	var stmt = db.prepare("INSERT INTO Stuff VALUES (?)");
-	
-	//Insert random data
-	var rnd;
-	for (var i = 0; i < 10; i++) {
-		rnd = Math.floor(Math.random() * 10000000);
-		stmt.run("Thing #" + rnd);
-	}
-	
-	stmt.finalize();
-	db.each("SELECT rowid AS id, thing FROM Stuff", function(err, row) {
-		console.log(row.id + ": " + row.thing);
-	});
-});
-db.close()
+    
 
 
 var fillDataOnHtml = function(formattedData){
