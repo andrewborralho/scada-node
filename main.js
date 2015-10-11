@@ -10,6 +10,41 @@ todo:
 var net = require('net');
 var http = require("http");
 
+
+var fs = require("fs");
+var file = process.env.CLOUD_DIR + "/" + "test.db";
+var exists = fs.existsSync(file);
+
+if(!exists) {
+  console.log("Creating DB file.");
+  fs.openSync(file, "w");
+}
+
+var sqlite3 = require("sqlite3").verbose();
+var db = new sqlite3.Database(file);
+
+db.serialize(function() {
+  if(!exists) {
+    db.run("CREATE TABLE Stuff (thing TEXT)");
+  }
+  
+        var stmt = db.prepare("INSERT INTO Stuff VALUES (?)");
+  
+//Insert random data
+  var rnd;
+  for (var i = 0; i < 10; i++) {
+    rnd = Math.floor(Math.random() * 10000000);
+    stmt.run("Thing #" + rnd);
+  }
+  
+stmt.finalize();
+  db.each("SELECT rowid AS id, thing FROM Stuff", function(err, row) {
+    console.log(row.id + ": " + row.thing);
+  });
+});
+
+
+
 var fillDataOnHtml = function(formattedData){
 	airGateData = "<p> Valor:" + formattedData[0] + " Identificador: " + formattedData[1] + "</p>"; 
 	var html = "<html><body><h1> Dado do AirGate </h1><br>" + airGateData + "</body></html>";
