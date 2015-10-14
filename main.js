@@ -35,7 +35,7 @@ var getRegisterValue = function(hexString){
 	return parseInt("0x" + hexString.substr(18,hexString.length));
 }
 
-var saveResults = function(data){
+var saveResults = function(parsedData){
 	var currentdate = new Date(); 
 	var datetime = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
 	airgateHistory.push([datetime,parsedData]);
