@@ -34,11 +34,11 @@ var getRegisterValue = function(hexString){
 	if(hexString.length > 23) return 0;
 	return parseInt("0x" + hexString.substr(18,hexString.length));
 }
-
+var counter = 1;
 var saveResults = function(parsedData){
-	var currentdate = new Date(); 
-	airgateHistory.push([currentdate,parsedData]);
+	airgateHistory.push([counter,parsedData]);
   	console.log(airgateHistory);
+  	counter++;
 }
 
 var modbusServer = net.createServer (function (socket){ 
