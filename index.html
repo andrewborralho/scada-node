@@ -39,11 +39,14 @@
             chart: {
               title: 'Historico de Baterias',
                 subtitle: 'em Volts (V)',
-                minValue: 9500,
-                maxValue: 9800,
+               
             },
-            width: 600,
-            height: 340
+            vAxis: {
+                minValue: 9500,
+                maxValue: 9800
+            },
+            width: 1200,
+            height: 400
           };
 
           var chart = new google.charts.Line(document.getElementById('linechart_material'));
