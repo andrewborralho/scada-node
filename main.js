@@ -13,6 +13,7 @@ app.get("/", function(req, res) {
 });
 
 app.get("/api/status", function(req, res) { 
+	res.setHeader('Content-Type', 'application/json');
 	res.send(JSON.stringify(airgateHistory));
 });
 
@@ -41,7 +42,6 @@ var modbusServer = net.createServer (function (socket){
   			var parsedData = getRegisterValue(data);
   			console.log(" --- register value: " + parsedData);
   			airgateHistory.push(parsedData);
-  			console.log(airgateHistory);
 	});
 	
 	setInterval(function(){
