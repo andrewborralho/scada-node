@@ -35,6 +35,13 @@ var getRegisterValue = function(hexString){
 	return parseInt("0x" + hexString.substr(18,hexString.length));
 }
 
+var saveResults = function(data){
+	var currentdate = new Date(); 
+	var datetime = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+	airgateHistory.push([datetime,parsedData]);
+  	console.log(airgateHistory);
+}
+
 var modbusServer = net.createServer (function (socket){ 
 	console.log(" ------- recebeu conexão de " + socket.remoteAddress + ":" + socket.remotePort);
 	socket.on('data', function(data) {
@@ -42,8 +49,7 @@ var modbusServer = net.createServer (function (socket){
   			// console.log(" --- data on hex: " + data);
   			var parsedData = getRegisterValue(data);
   			console.log(" --- register value: " + parsedData);
-  			airgateHistory.push(parsedData);
-  			console.log(airgateHistory);
+  			saveResults(parsedData);
 	});
 	
 	setInterval(function(){
