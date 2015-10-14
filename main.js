@@ -9,7 +9,7 @@ const SIGNAL_LEVEL_POOLING_INTERVAL = 6000;
 var express = require("express");
 var app = express();
 var airgateHistory = [];
-var signalLevel = 0;
+var signalLevel = "";
 
 app.get("/", function(req, res) {
 	res.sendfile('index.html')
