@@ -4,6 +4,9 @@ var fs = require('fs');
 var SQL = require('sql.js');
 const POOLING_INTERVAL = 10000;
 
+var sqlite = require("sqlite3");
+
+
 var express = require("express");
 var app = express();
 
