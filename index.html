@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Theme Template for Bootstrap</title>
+    <title>IME - Engenharia de Telecomunicações</title>
     
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -51,8 +51,12 @@
       
       
     function getDataFromServer(){
-        var currLen = window.serverData.length;
-        window.serverData.push([currLen + 1, 1000 + currLen*10]);
+        
+        $.get( "http://198.211.97.82:3000/api/status", function( data ) {
+            window.serverData = data;
+            console.log(data);
+            console.log(data[1]);
+        });
         return window.serverData;
     }
   </script>
