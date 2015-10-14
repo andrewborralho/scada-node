@@ -30,10 +30,12 @@
     function drawChart() {
         setInterval( function(){
           var data = new google.visualization.DataTable();
-          data.addColumn('number', 'Tempo');
+          data.addColumn('datetime', 'Tempo');
           data.addColumn('number', 'Bateria do Airgate');
 
+            
           data.addRows(getDataFromServer());
+            
 
           var options = {
             chart: {
@@ -55,7 +57,6 @@
         $.get( "http://198.211.97.82:3000/api/status", function( data ) {
             window.serverData = data;
             console.log(data);
-            console.log(data[1]);
         });
         return window.serverData;
     }
