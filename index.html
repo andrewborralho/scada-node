@@ -64,12 +64,13 @@
         return window.serverData;
     }
       
-      function getSignalFromServer(){
+    var getSignalFromServer = function(){
         $.get( "http://198.211.97.82:3000/api/signal", function( data ) {
             document.getElementById("signal-level").innerHTML = data;
         });
-        return window.serverData;
+        return true;
     }
+    setInterval(getSignalFromServer(), 6000);
   </script>
       
       
