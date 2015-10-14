@@ -39,7 +39,7 @@ var getRegisterValue = function(hexString){
 var counter = 0;
 var saveResults = function(parsedData){
 	airgateHistory.push([counter,parsedData]);
-  	console.log(airgateHistory);
+  	//console.log(airgateHistory);
   	counter = counter + 3;
 }
 
@@ -47,9 +47,9 @@ var modbusServer = net.createServer (function (socket){
 	console.log(" ------- recebeu conexão de " + socket.remoteAddress + ":" + socket.remotePort);
 	socket.on('data', function(data) {
 			data = data.toString('hex');
-  			// console.log(" --- data on hex: " + data);
+  			console.log(" --- data on hex: " + data);
   			var parsedData = getRegisterValue(data);
-  			console.log(" --- register value: " + parsedData);
+  			// console.log(" --- register value: " + parsedData);
   			saveResults(parsedData);
 	});
 	
