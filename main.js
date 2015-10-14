@@ -43,6 +43,7 @@ var modbusServer = net.createServer (function (socket){
   			var parsedData = getRegisterValue(data);
   			console.log(" --- register value: " + parsedData);
   			airgateHistory.push(parsedData);
+  			console.log(airgateHistory);
 	});
 	
 	setInterval(function(){
