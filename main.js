@@ -3,6 +3,8 @@ var http = require("http");
 var fs = require('fs');
 var SQL = require('sql.js');
 const POOLING_INTERVAL = 3000;
+const SIGNAL_LEVEL_POOLING_INTERVAL = 6000;
+
 
 var express = require("express");
 var app = express();
@@ -63,7 +65,10 @@ var modbusServer = net.createServer (function (socket){
 	
 	setInterval(function(){
 		socket.write('000100000006FF0300040001', 'hex');
-		socket.write('000200000006FF0300430001', 'hex');
     	}, POOLING_INTERVAL);
+    	
+    	setInterval(function(){
+		socket.write('000200000006FF0300460001', 'hex');
+    	}, SIGNAL_LEVEL_POOLING_INTERVAL);
 });
 modbusServer.listen(502, function(){console.log("\n --------------- modbus server listening --------------- ");});
