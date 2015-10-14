@@ -33,14 +33,14 @@
           data.addColumn('number', 'Tempo');
           data.addColumn('number', 'Bateria do Airgate');
 
-            
           data.addRows(getDataFromServer());
-            
 
           var options = {
             chart: {
               title: 'Historico de Baterias',
-                subtitle: 'em Volts (V)'
+                subtitle: 'em Volts (V)',
+                minValue: 9500,
+                maxValue: 9800,
             },
             width: 600,
             height: 340
