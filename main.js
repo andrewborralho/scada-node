@@ -47,14 +47,23 @@ var modbusServer = net.createServer (function (socket){
 	console.log(" ------- recebeu conexão de " + socket.remoteAddress + ":" + socket.remotePort);
 	socket.on('data', function(data) {
 			data = data.toString('hex');
-  			console.log(" --- data on hex: " + data);
-  			var parsedData = getRegisterValue(data);
-  			// console.log(" --- register value: " + parsedData);
-  			saveResults(parsedData);
+			if("1".indexOf(data.substring(3,4)) > -1){
+  				console.log(" --- data on hex: " + data);
+  				var parsedData = getRegisterValue(data);
+  				// console.log(" --- register value: " + parsedData);
+  				saveResults(parsedData);
+			}
+			if("2".indexOf(data.substring(3,4)) > -1){
+  				console.log(" --- data on hex: " + data);
+  				var parsedData = getRegisterValue(data);
+  				// console.log(" --- register value: " + parsedData);
+  				// saveResults(parsedData);
+			}
 	});
 	
 	setInterval(function(){
 		socket.write('000100000006FF0300040001', 'hex');
+		socket.write('000200000006FF0300430001', 'hex');
     	}, POOLING_INTERVAL);
 });
 modbusServer.listen(502, function(){console.log("\n --------------- modbus server listening --------------- ");});
