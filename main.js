@@ -9,6 +9,7 @@ const SIGNAL_LEVEL_POOLING_INTERVAL = 6000;
 var express = require("express");
 var app = express();
 var airgateHistory = [];
+var signalLevel = 0;
 
 app.get("/", function(req, res) {
 	res.sendfile('index.html')
@@ -37,6 +38,12 @@ var getRegisterValue = function(hexString){
 	if(result == 64536) { return undefined;}
 	return result;
 }
+
+var extractSignalLevel = function(signalInHex){
+	signalLevel = 0 - (parseInt("0x10000") - parseInt("0x" + hexString.substr(18,hexString.length)));
+	return signalLevel;
+}
+
 var counter = 0;
 var saveResults = function(parsedData){
 	if (airgateHistory.length > 24) airgateHistory = airgateHistory.slice(-1);
@@ -46,22 +53,22 @@ var saveResults = function(parsedData){
 }
 
 
-
 var modbusServer = net.createServer (function (socket){ 
 	console.log(" ------- recebeu conexão de " + socket.remoteAddress + ":" + socket.remotePort);
 	socket.on('data', function(data) {
 			data = data.toString('hex');
-			if("1".indexOf(data.substring(3,4)) > -1){
-  				console.log(" --- data on hex: " + data);
-  				var parsedData = getRegisterValue(data);
-  				// console.log(" --- register value: " + parsedData);
-  				saveResults(parsedData);
-			}
-			if("2".indexOf(data.substring(3,4)) > -1){
-  				console.log(" ------- data on hex: " + data);
-  				var parsedData = getRegisterValue(data);
-  				// console.log(" --- register value: " + parsedData);
-  				// saveResults(parsedData);
+			if(data.length == 22){
+				if("1".indexOf(data.substring(3,4)) > -1){
+	  				console.log(" --- data on hex: " + data);
+	  				var parsedData = getRegisterValue(data);
+	  				// console.log(" --- register value: " + parsedData);
+	  				saveResults(parsedData);
+				}
+				if("2".indexOf(data.substring(3,4)) > -1){
+	  				console.log(" ------- data on hex: " + data);
+	  				extractSignalLevel(parsedData);
+	  				console.log(signalLevel);
+				}
 			}
 	});
 	
