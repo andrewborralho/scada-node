@@ -20,6 +20,12 @@ app.get("/api/status", function(req, res) {
 	res.send(JSON.stringify(airgateHistory));
 });
 
+app.get("/api/signal", function(req, res) { 
+	res.setHeader('Content-Type', 'application/json');
+	res.send(JSON.stringify(signalLevel));
+});
+
+
  /* serves all the static files */
  app.get(/^(.+)$/, function(req, res){ 
      console.log('static file request : ' + req.params);
@@ -40,7 +46,7 @@ var getRegisterValue = function(hexString){
 }
 
 var extractSignalLevel = function(signalInHex){
-	signalLevel = 0 - (parseInt("0x10000") - parseInt("0x" + hexString.substr(18,hexString.length)));
+	signalLevel = 0 - (parseInt("0x10000") - parseInt("0x" + signalInHex.substr(18,signalInHex.length)));
 	return signalLevel;
 }
 
