@@ -13,7 +13,7 @@ app.get("/", function(req, res) {
 });
 
 app.get("/api/status", function(req, res) { 
-	res.send(JSON.stringify(airgateHistory););
+	res.send(JSON.stringify(airgateHistory));
 });
 
  /* serves all the static files */
