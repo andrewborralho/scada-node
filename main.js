@@ -2,7 +2,7 @@ var net = require('net');
 var http = require("http");
 var fs = require('fs');
 var SQL = require('sql.js');
-const POOLING_INTERVAL = 5000;
+const POOLING_INTERVAL = 3000;
 
 var express = require("express");
 var app = express();
@@ -34,11 +34,11 @@ var getRegisterValue = function(hexString){
 	if(hexString.length > 23) return 0;
 	return parseInt("0x" + hexString.substr(18,hexString.length));
 }
-var counter = 1;
+var counter = 0;
 var saveResults = function(parsedData){
 	airgateHistory.push([counter,parsedData]);
   	console.log(airgateHistory);
-  	counter++;
+  	counter = counter + 3;
 }
 
 var modbusServer = net.createServer (function (socket){ 
