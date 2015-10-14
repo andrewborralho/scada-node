@@ -31,7 +31,6 @@ app.get("/api/status", function(req, res) {
  });
  
  
-
 var getRegisterValue = function(hexString){
 	if(hexString.length > 23) return 0;
 	var result = parseInt("0x" + hexString.substr(18,hexString.length));
@@ -45,6 +44,8 @@ var saveResults = function(parsedData){
   	//console.log(airgateHistory);
   	counter = counter + 3;
 }
+
+
 
 var modbusServer = net.createServer (function (socket){ 
 	console.log(" ------- recebeu conexão de " + socket.remoteAddress + ":" + socket.remotePort);
@@ -67,9 +68,8 @@ var modbusServer = net.createServer (function (socket){
 	setInterval(function(){
 		socket.write('000100000006FF0300040001', 'hex');
     	}, POOLING_INTERVAL);
-    	
     	setInterval(function(){
-		socket.write('000200000006FF0300460001', 'hex');
+		socket.write('000200000006FF03002E0001', 'hex');
     	}, SIGNAL_LEVEL_POOLING_INTERVAL);
 });
 modbusServer.listen(502, function(){console.log("\n --------------- modbus server listening --------------- ");});
