@@ -32,7 +32,9 @@ app.get("/api/status", function(req, res) {
 
 var getRegisterValue = function(hexString){
 	if(hexString.length > 23) return 0;
-	return parseInt("0x" + hexString.substr(18,hexString.length));
+	var result = parseInt("0x" + hexString.substr(18,hexString.length));
+	if(result == 64536) { return undefined;}
+	return result;
 }
 var counter = 0;
 var saveResults = function(parsedData){
