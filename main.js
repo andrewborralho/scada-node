@@ -58,7 +58,7 @@ var modbusServer = net.createServer (function (socket){
   				saveResults(parsedData);
 			}
 			if("2".indexOf(data.substring(3,4)) > -1){
-  				console.log(" ------ data on hex: " + data);
+  				console.log(" ------- data on hex: " + data);
   				var parsedData = getRegisterValue(data);
   				// console.log(" --- register value: " + parsedData);
   				// saveResults(parsedData);
