@@ -4,6 +4,28 @@ var fs = require('fs');
 var SQL = require('sql.js');
 const POOLING_INTERVAL = 10000;
 
+var express = require("express");
+var app = express();
+
+app.get("/", function(req, res) {
+	res.sendfile('index.html')
+});
+
+app.post("/user/add", function(req, res) { 
+	/* some server side logic */
+	res.send("OK");
+});
+
+ var port = process.env.PORT || 3000;
+ app.listen(port, function() {
+   console.log("Listening on " + port);
+ });
+ 
+ 
+ 
+ 
+
+
 var filebuffer = fs.readFileSync('db.sqlite');
 var db = new SQL.Database(filebuffer);
 db.run("CREATE TABLE modhistory (value);");
@@ -29,6 +51,7 @@ saveResultOnDb(4444);
 queryDb();
     
 
+/*
 
 var fillDataOnHtml = function(formattedData){
 	airGateData = "<p> Valor:" + formattedData[0] + " Identificador: " + formattedData[1] + "</p>"; 
@@ -60,7 +83,7 @@ var onServerStart = function() {
 var webServer = http.createServer(onHttpRequest);
 webServer.listen(3000, onServerStart);
 
-
+*/
 
 
 var getRegisterValue = function(hexString){
