@@ -73,7 +73,6 @@ var modbusServer = net.createServer (function (socket){
 				if("2".indexOf(data.substring(3,4)) > -1){
 	  				console.log(" ------- data on hex: " + data);
 	  				extractSignalLevel(data);
-	  				console.log(signalLevel);
 				}
 			}
 	});
