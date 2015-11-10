@@ -36,7 +36,7 @@
           var dateFormatter = new google.visualization.DateFormat({pattern: "hh:mm:ss"});
 
           data.addRows(getDataFromServer());
-          for each (var elem in data){
+          for (elem in data){
             dateFormatter.format(elem,0);    
           }
           
