@@ -33,7 +33,7 @@
           data.addColumn('date', 'Tempo');
           data.addColumn('number', 'Bateria do Airgate');
 
-          var dateFormatter = new google.visualization.DateFormat({pattern: "hh:mm:ss});
+          var dateFormatter = new google.visualization.DateFormat({pattern: "hh:mm:ss"});
 
           data.addRows(getDataFromServer());
           for each (var elem in data){
