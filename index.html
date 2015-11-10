@@ -34,14 +34,14 @@
           data.addColumn('number', 'Bateria do Airgate');
 
           data.addRows(getDataFromServer());
-          for (elem in data){
-              h = elem[0].substring(11,13);
-              m = elem[0].substring(14,16);
-              s = elem[0].substring(17,19);
-              elem[0] = h + ":" + m + ":" + s;
+          for (i = 0; i < data.length; i++) { 
+              datetime = data[i][0];
+              h = datetime.substring(11,13);
+              m = datetime.substring(14,16);
+              s = datetime.substring(17,19);
+              data[i][0] = h + ":" + m + ":" + s;
           }
           
-
           var options = {
             chart: {
               title: 'Canal Analógico 2',
