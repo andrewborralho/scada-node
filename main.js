@@ -1,7 +1,7 @@
 var net = require('net');
 var http = require("http");
 var fs = require('fs');
-var SQL = require('sql.js');
+//var SQL = require('sql.js');
 const POOLING_INTERVAL = 3000;
 const SIGNAL_LEVEL_POOLING_INTERVAL = 6000;
 
