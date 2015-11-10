@@ -52,7 +52,7 @@ var extractSignalLevel = function(signalInHex){
 
 var counter = 0;
 var saveResults = function(parsedData){
-	if (airgateHistory.length > 24) airgateHistory = airgateHistory.slice(-1);
+	if (airgateHistory.length > 40) airgateHistory = airgateHistory.slice(-1);
 	airgateHistory.push([counter,parsedData]);
   	//console.log(airgateHistory);
   	counter = counter + 3;
