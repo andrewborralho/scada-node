@@ -30,14 +30,15 @@
     function drawChart() {
         setInterval( function(){
           var data = new google.visualization.DataTable();
-          data.addColumn('date', 'Tempo');
+          data.addColumn('text', 'Tempo');
           data.addColumn('number', 'Bateria do Airgate');
-
-          var dateFormatter = new google.visualization.DateFormat({pattern: "hh:mm:ss"});
 
           data.addRows(getDataFromServer());
           for (elem in data){
-            dateFormatter.format(elem,1);    
+              h = elem.str.substring(11,13);
+              m = elem.str.substring(14,16);
+              s = elem.str.substring(17,19);
+              elem = h + ":" + m + ":" + s;
           }
           
 
