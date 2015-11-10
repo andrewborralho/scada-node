@@ -6,6 +6,7 @@ const POOLING_INTERVAL = 3000;
 const SIGNAL_LEVEL_POOLING_INTERVAL = 6000;
 
 
+
 var express = require("express");
 var app = express();
 var airgateHistory = [];
@@ -51,11 +52,14 @@ var extractSignalLevel = function(signalInHex){
 }
 
 var counter = 0;
+setInterval(setNewTime, 1000);
+function setNewTime(){
+   ++counter;
+}
 var saveResults = function(parsedData){
 	if (airgateHistory.length > 40) airgateHistory = airgateHistory.slice(-1);
 	airgateHistory.push([counter,parsedData]);
   	//console.log(airgateHistory);
-  	counter = counter + 3;
 }
 
 
