@@ -57,7 +57,7 @@
       
     function getDataFromServer(){
         
-        $.get( "http://198.211.97.82:3000/api/status", function( data ) {
+        $.get( "http://162.243.25.6:3000/api/status", function( data ) {
             window.serverData = data;
             console.log(data);
         });
@@ -65,7 +65,7 @@
     }
       
     var getSignalFromServer = function(){
-        $.get( "http://198.211.97.82:3000/api/signal", function( data ) {
+        $.get( "http://162.243.25.6:3000/api/signal", function( data ) {
             document.getElementById("signal-level").innerHTML = data;
         });
         return true;
