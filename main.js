@@ -2,7 +2,7 @@ var net = require('net');
 var http = require("http");
 var fs = require('fs');
 //var SQL = require('sql.js');
-const POOLING_INTERVAL = 2000;
+const POOLING_INTERVAL = 1000;
 const SIGNAL_LEVEL_POOLING_INTERVAL = 6000;
 
 
@@ -58,7 +58,7 @@ function setNewTime(){
 }
 var saveResults = function(parsedData){
 	if (airgateHistory.length > 40) airgateHistory = airgateHistory.slice(-1);
-	airgateHistory.push([counter,parsedData]);
+	airgateHistory.push([new Date(),parsedData]);
   	//console.log(airgateHistory);
 }
 
