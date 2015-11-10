@@ -34,13 +34,7 @@
           data.addColumn('number', 'Bateria do Airgate');
 
           data.addRows(getDataFromServer());
-          for (i = 0; i < data.length; i++) { 
-              datetime = data[i][0];
-              h = datetime.substring(11,13);
-              m = datetime.substring(14,16);
-              s = datetime.substring(17,19);
-              data[i][0] = h + ":" + m + ":" + s;
-          }
+          
           
           var options = {
             chart: {
@@ -65,9 +59,20 @@
     function getDataFromServer(){
         
         $.get( "http://162.243.25.6:3000/api/status", function( data ) {
+            for (i = 0; i < data.length; i++) { 
+              datetime = data[i][0];
+              h = datetime.substring(11,13);
+              m = datetime.substring(14,16);
+              s = datetime.substring(17,19);
+              data[i][0] = h + ":" + m + ":" + s;
+            }
             window.serverData = data;
             console.log(data);
+            
         });
+        
+        
+          
         return window.serverData;
     }
       
