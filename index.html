@@ -30,7 +30,7 @@
     function drawChart() {
         setInterval( function(){
           var data = new google.visualization.DataTable();
-          data.addColumn('text', 'Tempo');
+          data.addColumn('string', 'Tempo');
           data.addColumn('number', 'Bateria do Airgate');
 
           data.addRows(getDataFromServer());
